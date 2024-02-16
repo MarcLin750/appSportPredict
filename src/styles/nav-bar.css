@@ -1,0 +1,32 @@
+.navLogo{
+    display: flex;
+    align-items: center;
+}
+
+.navTitle{
+    padding-left: 10px;
+    text-decoration: none;
+    color:black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+}
+
+.navBar{
+    padding: 10px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sapLogo{
+    height: 40px;
+    width: 60px;
+}
+
+.user_profil {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 3px solid #272133;
+  }

@@ -1,32 +1,43 @@
 import React, { FunctionComponent, useState } from "react";
 import Exercise from "../models/exercise";
-import './exercise-card.css';
+import { useHistory } from "react-router-dom";
+import '../styles/exercise-card.css';
 
 type Props = {
     exercise: Exercise,
-    borderColor?: string
+    backgroundColor?: string
 };
 
-const ExerciceCard: FunctionComponent<Props> = ({exercise, borderColor = '#009688'}) =>{
+const ExerciceCard: FunctionComponent<Props> = ({exercise, backgroundColor = '#ACE4FC'}) =>{
 
     const [color, setColor] = useState<string>();
+    const history = useHistory();
 
     const showBorder = () => {
-        setColor(borderColor);
+        setColor(backgroundColor);
     }
 
     const hideBorder = () => {
-        setColor('#f5f5f5');
+        setColor('');
+    }
+
+    const goToExercise = (id: string) => {
+        history.push(`/exercises/${id}`)
     }
 
     return (
-        <div className="card" style={{ borderColor: color}} onMouseEnter={showBorder} onMouseLeave={hideBorder}>
-            <h4>
-                Exercice : {exercise.sport}
-            </h4> 
-            <p>
-                Date : {exercise.start_time}
-            </p>
+        <div className="card" onClick={() => goToExercise(exercise.id)} style={{ backgroundColor: color }} onMouseEnter={showBorder} onMouseLeave={hideBorder}>
+            <div className="card-item" >
+                <h4>
+                    {exercise.sport} 
+                </h4> 
+                <p>
+                    {exercise.start_time}
+                </p>
+            </div>
+            <h5 className="sport-detail">
+                {exercise.detailed_sport_info}
+            </h5>
         </div>
     )
 }

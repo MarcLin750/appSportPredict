@@ -3,6 +3,8 @@ import Exercise from "../models/exercise";
 import Exercises from "../models/mock-exercise";
 import ExerciceCard from "../components/exercise-card";
 
+import '../styles/exercise-list.css'
+
 const ExerciseList: FunctionComponent = () => {
     // initialisation de exercises avec le model Exercise[] avec un tableau vide
     const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -14,13 +16,13 @@ const ExerciseList: FunctionComponent = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Liste d'exercice</h1>
-            <div>
+        <div className="list-entrainement">
+            <h2 className="title-entrainement">Liste des entrainements</h2>
+            <ul style={{ overflowY: "scroll" }}>
                 {exercises.map(exercise => (
                     <ExerciceCard key={exercise.id} exercise={exercise} />
                 ))}
-            </div>
+            </ul>
         </div>
     )
 }
