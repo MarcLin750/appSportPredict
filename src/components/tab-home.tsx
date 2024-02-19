@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
+import SessionList from "./session-list";
 import ExerciseList from "./exercise-list";
 import Entrainement from "./entrainement";
 import EtatPhysique from "./etat-physique";
@@ -18,7 +19,8 @@ const TabHome: FunctionComponent = () => {
             </div>
             {activeTab === 'Entrainements' && (
                 <div id="Entrainements" className="Entrainements">
-                    <ExerciseList />
+                    {/* <ExerciseList /> */}
+                    <SessionList />
                     <Entrainement />
                     <EtatPhysique />
                 </div>

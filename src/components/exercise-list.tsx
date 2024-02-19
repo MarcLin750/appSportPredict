@@ -5,15 +5,17 @@ import ExerciceCard from "../components/exercise-card";
 
 import '../styles/exercise-list.css'
 
+
 const ExerciseList: FunctionComponent = () => {
     // initialisation de exercises avec le model Exercise[] avec un tableau vide
     const [exercises, setExercises] = useState<Exercise[]>([]);
-    
+
     // hook d'effet qui prend 2 paramètre la fonction set qui prend les argument d'exercises et 
     // un tableau vide pour éviter de déclencher le hook d'effet pour chaque modification du composant
     useEffect(() => {
         setExercises(Exercises);
     }, []);
+
 
     return (
         <div className="list-entrainement">
