@@ -1,6 +1,6 @@
 .title-session{
     margin: 0;
-    padding: 5px;
+    padding: 20px;
     display: flex;
     justify-content: space-around;
     background-color: white;
@@ -21,24 +21,17 @@ ul{
 .card{
     padding-bottom: 5px;
     padding: 10px;
+    background-color: white;
 }
 
 .card-item{
     padding-inline: 10px;
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     align-items: center;
 }
 
 .card-item2{
     padding-left: 10px;
-}
-
-h4{
-    margin: 0;
-}
-
-h5{
-    margin: 0;
+    display: inline;
 }

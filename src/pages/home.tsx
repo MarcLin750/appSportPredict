@@ -8,9 +8,9 @@ const Home: FunctionComponent = () =>{
 
     const history = useHistory();
 
-    const goToChargerLesEntrainements = () => {
-        history.push('/connexion-polar')
-    }
+    // const goToChargerLesEntrainements = () => {
+    //     history.push('/connexion-polar')
+    // }
 
     return(
         <div >
@@ -18,7 +18,10 @@ const Home: FunctionComponent = () =>{
                 <button className="btn-home">
                     Sauvegarder
                 </button>
-                <button className="btn-home" onClick={goToChargerLesEntrainements}>
+                {/* <button className="btn-home" onClick={goToChargerLesEntrainements}>
+                    Charger les entrainements
+                </button> */}
+                <button className="btn-home">
                     Charger les entrainements
                 </button>
                 <button className="btn-home">
