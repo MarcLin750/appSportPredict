@@ -130,54 +130,54 @@ const TabHome: FunctionComponent = () => {
                     {/* <SessionDetail /> */}
 
                     <div className="entrainement">
-                        <h1 style={{paddingLeft: "20px"}}>Running</h1>
                             <ul className="SessionDetail_Ul"style={{ overflowY: "scroll"}}>
                             {session.map(session => (
                                 <div className="session-detail" key={session.SESSIONID}>
-                                    <p>SESSIONID: {session.SESSIONID}</p>
-                                    <p>SESSION_YEAR: {session.SESSION_YEAR}</p>
-                                    <p>SESSION_MONTH: {session.SESSION_MONTH}</p>
-                                    <p>SESSION_DAY: {session.SESSION_DAY}</p>
-                                    <p>USERID: {session.USERID}</p>
-                                    <p>SEX: {session.SEX}</p>
-                                    <p>BIRTHDAY: {session.BIRTHDAY}</p>
-                                    <p>HEIGHT: {session.HEIGHT}</p>
-                                    <p>WEIGHT: {session.WEIGHT}</p>
-                                    <p>VO2MAX: {session.VO2MAX}</p>
-                                    <p>AEROBICTHRESHOLD: {session.AEROBICTHRESHOLD}</p>
-                                    <p>ANAEROBICTHRESHOLD: {session.ANAEROBICTHRESHOLD}</p>
-                                    <p>SPORT: {session.SPORT}</p>
-                                    <p>STARTTIME: {session.STARTTIME}</p>
-                                    <p>STARTTIMEEXO: {session.STARTTIMEEXO}</p>
-                                    <p>STOPTIME: {session.STOPTIME}</p>
-                                    <p>STOPTIMEEXO: {session.STOPTIMEEXO}</p>
-                                    <p>DURATION_CALCULATED: {session.DURATION_CALCULATED}</p>
-                                    <p>DURATION2: {session.DURATION2}</p>
-                                    <p>LATITUDE: {session.LATITUDE}</p>
-                                    <p>LONGITUDE: {session.LONGITUDE}</p>
-                                    <p>DISTANCE: {session.DISTANCE}</p>
-                                    <p>ASCENT: {session.ASCENT}</p>
-                                    <p>DESCENT: {session.DESCENT}</p>
-                                    <p>MAXIMUMHEARTRATE: {session.MAXIMUMHEARTRATE}</p>
-                                    <p>AVERAGEHEARTRATE: {session.AVERAGEHEARTRATE}</p>
-                                    <p>KILOCALORIES: {session.KILOCALORIES}</p>
-                                    <p>AVGSPEED: {session.AVGSPEED }</p>
-                                    <p>MAXSPEED: {session.MAXSPEED}</p>
-                                    <p>AVGCADENCE: {session.AVGCADENCE}</p>
-                                    <p>MAXCADENCE: {session.MAXCADENCE}</p>
-                                    <p>TIMEINZONE1: {session.TIMEINZONE1}</p>
-                                    <p>TIMEINZONE2: {session.TIMEINZONE2}</p>
-                                    <p>TIMEINZONE3: {session.TIMEINZONE3}</p>
-                                    <p>TIMEINZONE4: {session.TIMEINZONE4}</p>
-                                    <p>TIMEINZONE5: {session.TIMEINZONE5}</p>
-                                    <p>CARDIOLOAD: {session.CARDIOLOAD}</p>
-                                    <p>MUSCLELOAD: {session.MUSCLELOAD}</p>
-                                    <p>CARDIOLOADINTERPRETATION: {session.CARDIOLOADINTERPRETATION}</p>
-                                    <p>MUSCLELOADINTERPRETATION: {session.MUSCLELOADINTERPRETATION}</p>
-                                    <p>PERCEIVEDLOAD: {session.PERCEIVEDLOAD}</p>
-                                    <p>PERCEIVEDLOADINTERPRETATION: {session.PERCEIVEDLOADINTERPRETATION}</p>
-                                    <p>RUNNINGVERIFIED: {session.RUNNINGVERIFIED}</p>
-                                    <p>CATEGORYSESSION: {session.CATEGORYSESSION}</p>
+                                    <h1 style={{paddingLeft: "20px"}}>{session.SPORT}</h1>
+                                        <p>SESSIONID: {session.SESSIONID}</p>
+                                        <p>SESSION_YEAR: {session.SESSION_YEAR}</p>
+                                        <p>SESSION_MONTH: {session.SESSION_MONTH}</p>
+                                        <p>SESSION_DAY: {session.SESSION_DAY}</p>
+                                        <p>USERID: {session.USERID}</p>
+                                        <p>SEX: {session.SEX}</p>
+                                        <p>BIRTHDAY: {session.BIRTHDAY}</p>
+                                        <p>HEIGHT: {session.HEIGHT}</p>
+                                        <p>WEIGHT: {session.WEIGHT}</p>
+                                        <p>VO2MAX: {session.VO2MAX}</p>
+                                        <p>AEROBICTHRESHOLD: {session.AEROBICTHRESHOLD}</p>
+                                        <p>ANAEROBICTHRESHOLD: {session.ANAEROBICTHRESHOLD}</p>
+                                        <p>SPORT: {session.SPORT}</p>
+                                        <p>STARTTIME: {session.STARTTIME}</p>
+                                        <p>STARTTIMEEXO: {session.STARTTIMEEXO}</p>
+                                        <p>STOPTIME: {session.STOPTIME}</p>
+                                        <p>STOPTIMEEXO: {session.STOPTIMEEXO}</p>
+                                        <p>DURATION_CALCULATED: {session.DURATION_CALCULATED}</p>
+                                        <p>DURATION2: {session.DURATION2}</p>
+                                        <p>LATITUDE: {session.LATITUDE}</p>
+                                        <p>LONGITUDE: {session.LONGITUDE}</p>
+                                        <p>DISTANCE: {session.DISTANCE}</p>
+                                        <p>ASCENT: {session.ASCENT}</p>
+                                        <p>DESCENT: {session.DESCENT}</p>
+                                        <p>MAXIMUMHEARTRATE: {session.MAXIMUMHEARTRATE}</p>
+                                        <p>AVERAGEHEARTRATE: {session.AVERAGEHEARTRATE}</p>
+                                        <p>KILOCALORIES: {session.KILOCALORIES}</p>
+                                        <p>AVGSPEED: {session.AVGSPEED }</p>
+                                        <p>MAXSPEED: {session.MAXSPEED}</p>
+                                        <p>AVGCADENCE: {session.AVGCADENCE}</p>
+                                        <p>MAXCADENCE: {session.MAXCADENCE}</p>
+                                        <p>TIMEINZONE1: {session.TIMEINZONE1}</p>
+                                        <p>TIMEINZONE2: {session.TIMEINZONE2}</p>
+                                        <p>TIMEINZONE3: {session.TIMEINZONE3}</p>
+                                        <p>TIMEINZONE4: {session.TIMEINZONE4}</p>
+                                        <p>TIMEINZONE5: {session.TIMEINZONE5}</p>
+                                        <p>CARDIOLOAD: {session.CARDIOLOAD}</p>
+                                        <p>MUSCLELOAD: {session.MUSCLELOAD}</p>
+                                        <p>CARDIOLOADINTERPRETATION: {session.CARDIOLOADINTERPRETATION}</p>
+                                        <p>MUSCLELOADINTERPRETATION: {session.MUSCLELOADINTERPRETATION}</p>
+                                        <p>PERCEIVEDLOAD: {session.PERCEIVEDLOAD}</p>
+                                        <p>PERCEIVEDLOADINTERPRETATION: {session.PERCEIVEDLOADINTERPRETATION}</p>
+                                        <p>RUNNINGVERIFIED: {session.RUNNINGVERIFIED}</p>
+                                        <p>CATEGORYSESSION: {session.CATEGORYSESSION}</p>
                                 </div>
                             ))}
                             </ul>
