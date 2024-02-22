@@ -13,20 +13,20 @@ const Home: FunctionComponent = () =>{
     // }
 
     return(
-        <div >
+        <div>
             <div className="menu">
-                <button className="btn-home">
-                    Sauvegarder
-                </button>
+                <input type="radio" name="btn-home" id="Sauvegarder" />
+                <label htmlFor="Sauvegarder">Sauvegarder</label>
+
                 {/* <button className="btn-home" onClick={goToChargerLesEntrainements}>
                     Charger les entrainements
                 </button> */}
-                <button className="btn-home">
-                    Charger les entrainements
-                </button>
-                <button className="btn-home">
-                    Supprimer l'entrainement
-                </button>
+                
+                <input type="radio" name="btn-home" id="Charger_les_entrainements" />
+                <label htmlFor="Charger_les_entrainements">Charger les entrainements</label>
+
+                <input type="radio" name="btn-home" id="Supprimer_entrainement" />
+                <label htmlFor="Supprimer_entrainement">Supprimer l'entrainement</label>
             </div>
             <TabHome />
         </div>

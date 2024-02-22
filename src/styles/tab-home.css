@@ -3,20 +3,24 @@
     justify-content: center;
 }
 
-.btn-tab{
-    margin-top: 20px;
-    padding: 20px;
-    margin-left: 20px;
-    display: inline-block;
-    background-color: white;
-    border: 3px solid white;
-    color: #1c52cf;
+.tab-bar input{
+    display: none;
 }
 
-.btn-tab:hover{
+.tab-bar label {
     color: #1c52cf;
-    background-color: white;
-    border-bottom: 3px solid #1c52cf;
+    margin-inline: 30px;
+    padding-bottom: 10px;
+    border-bottom: 4px white solid;
+    border-radius: 5%;
+}
+
+.tab-bar input:checked + label{
+    color: #1c52cf;
+    margin-inline: 30px;
+    padding-bottom: 10px;
+    border-bottom: 4px #1c52cf solid;
+    border-radius: 5%;
 }
 
 .Entrainements{
@@ -54,18 +58,36 @@
     background-color: white;
 }
 
-.SessionList_Ul{
+.SessionList_Ul {
     margin: 0;
     padding: 0;
-    height: 90%;
+    height: 80%;
     width: 100%;
     background-color: white;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.SessionList_Ul input{
+    display: none;
+}
+
+.SessionList_Ul label{
+    background-color: aqua;
+}
+
+.SessionDetail_Ul input:checked + label{
+    background-color: aqua;
+}
+
+.bg-disabled{
+    background-color: black;
 }
 
 .card{
     padding-bottom: 5px;
     padding: 10px;
-    background-color: white;
 }
 
 .card-item{
@@ -98,4 +120,5 @@
     padding: 0;
     height: 90%;
     background-color: white;
+    display: flex;
 }

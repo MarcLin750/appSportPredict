@@ -1,15 +1,14 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
-import SessionList from "./session-list";
-import ExerciseList from "./exercise-list";
-import Entrainement from "./entrainement";
+// import SessionList from "./session-list";
+// import Entrainement from "./entrainement";
+// import SessionDetail from "./entrainement";
 import EtatPhysique from "./etat-physique";
-
-import '../styles/tab-home.css';
-import SessionDetail from "./entrainement";
 
 import SessionCard from "./session-card";
 import ListOfSessions from "../models/listofsessions";
 import SESSIONDETAIL from "../models/session-detail";
+
+import '../styles/tab-home.css';
 
 
 const TabHome: FunctionComponent = () => {
@@ -19,9 +18,8 @@ const TabHome: FunctionComponent = () => {
     const [listOfSessions, setListOfSessions] = useState<ListOfSessions[]>([]);
     
     const [session, setSession] = useState<SESSIONDETAIL[]>([]);
-    const [sessionID, setSessionID] = useState('');
+    // const [sessionID, setSessionID] = useState('');
 
-    
     useEffect(() => {
         // Appel à l'API et traitement des données
         fetch('https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/listofsessions')
@@ -36,7 +34,7 @@ const TabHome: FunctionComponent = () => {
             }));
             
             // Assignation des données formatées à LISTOFSESSIONS
-            setListOfSessions(formattedData);
+            setListOfSessions(formattedData.reverse());
         
             // console.log(LISTOFSESSIONS);
           });
@@ -50,7 +48,6 @@ const TabHome: FunctionComponent = () => {
 
     const goToSession = (id: string) => {
         // console.log(id)
-
         fetch(`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getsession/?id=${id}`)
             .then(res => res.json())
             .then((data: any[]) => {   
@@ -103,13 +100,16 @@ const TabHome: FunctionComponent = () => {
                 setSession(formattedData);
             });
     }
-
+    
     return (
         <div>
             <div className="tab-bar">
-                <button className="btn-tab" onClick={() => setActiveTab('Entrainements')}>Entrainements</button>
-                <button className="btn-tab" onClick={() => setActiveTab('Analyse')}>Analyse</button>
-                <button className="btn-tab" onClick={() => setActiveTab('Chat-GPT')}>Chat GPT</button>
+                <input type="radio" name="btn-tab" id="Entrainements" onClick={() => setActiveTab('Entrainements')}  checked={activeTab === 'Entrainements'} />
+                <label htmlFor="Entrainements">Entrainements</label>
+                <input type="radio" name="btn-tab" id="Analyse" onClick={() => setActiveTab('Analyse')}/>
+                <label htmlFor="Analyse">Analyse</label>
+                <input type="radio" name="btn-tab" id="Chat-GPT" onClick={() => setActiveTab('Chat-GPT')}/>
+                <label htmlFor="Chat-GPT">Chat GPT</label>
             </div>
             {activeTab === 'Entrainements' && (
                 <div id="Entrainements" className="Entrainements">
@@ -118,10 +118,13 @@ const TabHome: FunctionComponent = () => {
 
                     <div className="session-list">
                         <h2 className="title-session">Liste des entrainements</h2>
-                        <ul className="SessionList_Ul" style={{ overflowY: "scroll"}}>
-                            {listOfSessions.map(session => (
-                                <div onClick={() => goToSession(session.SESSIONID)} key={session.SESSIONID}>
-                                    <SessionCard session={session}/> 
+                        <ul className="SessionList_Ul">
+                            {listOfSessions.map((session, index) => (
+                                <div>
+                                    <input type="radio" name="btn-session" id={session.SESSIONID} key={session.SESSIONID} onClick={() => goToSession(session.SESSIONID)}/>
+                                        <label htmlFor={session.SESSIONID}>
+                                            <SessionCard session={session}/> 
+                                        </label>
                                 </div>
                             ))}
                         </ul>

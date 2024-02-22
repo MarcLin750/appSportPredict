@@ -3,7 +3,11 @@
     justify-content: flex-end;
 }
 
-.btn-home{
+.menu input{
+    display: none;
+}
+
+.menu input + label{
     margin: 10px;
     padding: 4px;
     display: inline-block;
@@ -13,7 +17,7 @@
     color: #1c52cf;
 }
 
-.btn-home:hover{
+.menu input:checked + label{
     color: white;
     background-color: #1c52cf;
     border: 2px double #1c52cf;
