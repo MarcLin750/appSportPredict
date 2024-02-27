@@ -42,16 +42,14 @@ const SessionCard: FunctionComponent<Props> = ({session, backgroundColor = '#ACE
     }
 
     return(
-        <div>
-            <div className="card" style={{ backgroundColor: color }} onMouseEnter={showBorder} onMouseLeave={hideBorder}>
-                <div className="card-item">
-                    <strong> {session.SPORT} </strong>
-                    <small> {formatDate(session.SESSIONID)} </small>
-                </div>
-                <div className="card-item2">
-                    <small> Durée: {formatDuration(session.DURATION2)} </small>
-                    <small> Distance: {formatDistance(session.DISTANCE)} </small>
-                </div>
+        <div className="card" style={{ backgroundColor: color }} >
+            <div className="card-item">
+                <strong> {session.SPORT} </strong>
+                <small> {formatDate(session.SESSIONID)} </small>
+            </div>
+            <div className="card-item">
+                <small> Durée: {formatDuration(session.DURATION2)} </small>
+                <small> Distance: {formatDistance(session.DISTANCE)} </small>
             </div>
         </div>
     )

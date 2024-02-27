@@ -17,21 +17,3 @@ ul{
     height: 90%;
     width: 100%;
 }
-
-.card{
-    padding-bottom: 5px;
-    padding: 10px;
-    background-color: white;
-}
-
-.card-item{
-    padding-inline: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-item2{
-    padding-left: 10px;
-    display: inline;
-}

@@ -1,20 +1,45 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import SESSIONDETAIL from "../models/session-detail";
+import ListOfSessions from "../models/listofsessions";
 import '../styles/entrainement.css';
 
-const SessionDetail: FunctionComponent = () => {
-
+const SessionList: FunctionComponent = () => {
+    
+    const [listOfSessions, setListOfSessions] = useState<ListOfSessions[]>([]);
+    
     const [session, setSession] = useState<SESSIONDETAIL[]>([]);
-    const [sessionID, setSessionID] = useState('2019-12-24T12:02:06.605');
+    const [sessionID, setSessionID] = useState('');
+
+    useEffect(() => {
+        // Appel à l'API et traitement des données
+        fetch('https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/listofsessions')
+          .then(response => response.json())
+          .then((data: any[]) => {
+            // Mapping des données et formatage
+            const formattedData: ListOfSessions[] = data.map(data => ({
+              SESSIONID: data[0],
+              SPORT: data[1],
+              DURATION2: data[2],
+              DISTANCE: data[3]
+            }));
+            
+            // Assignation des données formatées à LISTOFSESSIONS
+            setListOfSessions(formattedData.reverse());
+        
+            // console.log(LISTOFSESSIONS);
+          });
+    }, []);
 
     useEffect(() => {
         fetch('https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/lastsession')
          .then(res=> res.json())
-         .then(data => setSessionID(data[0]))
-    })
+         .then(data => goToSession(data[0]))
+    }, []);
 
-    useEffect(() => {
-        fetch(`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getsession/?id=${sessionID}`)
+    const goToSession = (id: string) => {
+        // console.log(id)
+        
+        fetch(`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getsession/?id=${id}`)
             .then(res => res.json())
             .then((data: any[]) => {   
                 const formattedData: SESSIONDETAIL[] = data.map(data => ({
@@ -64,65 +89,106 @@ const SessionDetail: FunctionComponent = () => {
                     CATEGORYSESSION: data[43]
                 }));
                 setSession(formattedData);
+                setSessionID(id)
             });
-    }, []);
+    }
 
+    
+    const formatDate = (date: string):string =>{
+
+        const [datePart, timePart] = date.split('T');
+        const [year, month, day] = datePart.split('-');
+        const [hourMinuteSecond] = timePart.split('.');
+        const [hour, minute] = hourMinuteSecond.split(':'); 
+
+        return `${hour}:${minute} | ${day}.${month}.${year}`;
+    }
+
+    const formatDuration = (duration: number): string => {
+
+        const [partOne] = duration.toString().split('.');
+
+        return `Durée: ${partOne}.`;
+    }
+
+    const formatDistance = (distance: number): string => {
+        const [partOne] = distance.toString().split('.');
+
+        return `Distance: ${partOne} m.`
+    }
 
     return (
-        <div className="entrainement">
-            <h1 style={{paddingLeft: "20px"}}>Running</h1>
+        <div id="Entrainements" className="Entrainements">
+            <div className="session-list">
+                <h2 className="title-session">Liste des entrainements</h2>
+                <div className="filtre-sessionlist">
+                    <button>Filtre</button>
+                </div>
+                <ul className="SessionList_Ul">
+                    {listOfSessions.map(session => (
+                        <li>
+                            <input type="radio" name="btn-session" id={session.SESSIONID} key={session.SESSIONID} onClick={() => goToSession(session.SESSIONID)} checked={sessionID === session.SESSIONID}/>
+                                <label htmlFor={session.SESSIONID} className="label-item">
+                                        <strong> {session.SPORT} </strong>
+                                        <small> {formatDate(session.SESSIONID)} </small>
+                                </label>
+                        </li>
+                    ))}
+                </ul>
+            </div>
 
-                {session.map(session => (
-                    <div className="session-detail" key={session.SESSIONID}>
-                        <small>SESSIONID: {session.SESSIONID}</small>
-                        <small>SESSION_YEAR: {session.SESSION_YEAR}</small>
-                        <small>SESSION_MONTH: {session.SESSION_MONTH}</small>
-                        <small>SESSION_DAY: {session.SESSION_DAY}</small>
-                        <small>USERID: {session.USERID}</small>
-                        <small>SEX: {session.SEX}</small>
-                        <small>BIRTHDAY: {session.BIRTHDAY}</small>
-                        <small>HEIGHT: {session.HEIGHT}</small>
-                        <small>WEIGHT: {session.WEIGHT}</small>
-                        <small>VO2MAX: {session.VO2MAX}</small>
-                        <small>AEROBICTHRESHOLD: {session.AEROBICTHRESHOLD}</small>
-                        <small>ANAEROBICTHRESHOLD: {session.ANAEROBICTHRESHOLD}</small>
-                        <small>SPORT: {session.SPORT}</small>
-                        <small>STARTTIME: {session.STARTTIME}</small>
-                        <small>STARTTIMEEXO: {session.STARTTIMEEXO}</small>
-                        <small>STOPTIME: {session.STOPTIME}</small>
-                        <small>STOPTIMEEXO: {session.STOPTIMEEXO}</small>
-                        <small>DURATION_CALCULATED: {session.DURATION_CALCULATED}</small>
-                        <small>DURATION2: {session.DURATION2}</small>
-                        <small>LATITUDE: {session.LATITUDE}</small>
-                        <small>LONGITUDE: {session.LONGITUDE}</small>
-                        <small>DISTANCE: {session.DISTANCE}</small>
-                        <small>ASCENT: {session.ASCENT}</small>
-                        <small>DESCENT: {session.DESCENT}</small>
-                        <small>MAXIMUMHEARTRATE: {session.MAXIMUMHEARTRATE}</small>
-                        <small>AVERAGEHEARTRATE: {session.AVERAGEHEARTRATE}</small>
-                        <small>KILOCALORIES: {session.KILOCALORIES}</small>
-                        <small>AVGSPEED: {session.AVGSPEED }</small>
-                        <small>MAXSPEED: {session.MAXSPEED}</small>
-                        <small>AVGCADENCE: {session.AVGCADENCE}</small>
-                        <small>MAXCADENCE: {session.MAXCADENCE}</small>
-                        <small>TIMEINZONE1: {session.TIMEINZONE1}</small>
-                        <small>TIMEINZONE2: {session.TIMEINZONE2}</small>
-                        <small>TIMEINZONE3: {session.TIMEINZONE3}</small>
-                        <small>TIMEINZONE4: {session.TIMEINZONE4}</small>
-                        <small>TIMEINZONE5: {session.TIMEINZONE5}</small>
-                        <small>CARDIOLOAD: {session.CARDIOLOAD}</small>
-                        <small>MUSCLELOAD: {session.MUSCLELOAD}</small>
-                        <small>CARDIOLOADINTERPRETATION: {session.CARDIOLOADINTERPRETATION}</small>
-                        <small>MUSCLELOADINTERPRETATION: {session.MUSCLELOADINTERPRETATION}</small>
-                        <small>PERCEIVEDLOAD: {session.PERCEIVEDLOAD}</small>
-                        <small>PERCEIVEDLOADINTERPRETATION: {session.PERCEIVEDLOADINTERPRETATION}</small>
-                        <small>RUNNINGVERIFIED: {session.RUNNINGVERIFIED}</small>
-                        <small>CATEGORYSESSION: {session.CATEGORYSESSION}</small>
+            {/* <SessionDetail /> */}
+
+            <div className="TabSessionDetail">
+            {session.map(session => (
+                <div className="session-detail" key={session.SESSIONID}>
+                    <div className="title-session-detail">
+                        <h1 style={{paddingLeft: "20px"}}>{session.SPORT}</h1>
                     </div>
-                ))}
-
+                    <div className="session-detail-item">
+                        <p>STARTTIME: {session.STARTTIME}</p>
+                        <p>STOPTIME: {session.STOPTIME}</p>
+                        <p>DURATION_CALCULATED: {session.DURATION_CALCULATED}</p>
+                        <p>DURATION2: {session.DURATION2}</p>
+                        <p>DISTANCE: {session.DISTANCE}</p>
+                        <p>MAXIMUMHEARTRATE: {session.MAXIMUMHEARTRATE}</p>
+                        <p>AVERAGEHEARTRATE: {session.AVERAGEHEARTRATE}</p>
+                        <p>KILOCALORIES: {session.KILOCALORIES}</p>
+                        <p>AVGSPEED: {session.AVGSPEED }</p>
+                        <p>MAXSPEED: {session.MAXSPEED}</p>
+                        <p>AVGCADENCE: {session.AVGCADENCE}</p>
+                        <p>MAXCADENCE: {session.MAXCADENCE}</p>
+                    </div>
+                </div>
+            ))}
+            </div>
+                        
+            {/* <EtatPhysique /> */}
+            
+            <div className="etatPhysique">
+                <h1 style={{paddingLeft: "20px"}}>Etat Physique:</h1>
+                <form action="">
+                    <label htmlFor="">Ressenti de la session: </label>
+                    <select name="" id="">
+                        <option value="">-- Choisi ton état physique --</option>
+                        <option value="TresFatiguer">Très Fatiguer</option>
+                        <option value="Fatiguer">Fatiguer</option>
+                        <option value="EnForme">En forme</option>
+                        <option value="Super">Super</option>
+                    </select>
+                    <label htmlFor="">Type d'équipement</label>
+                    <select name="" id="">
+                        <option value="">-- Choisi ton équipement --</option>
+                        <option value="ChaussureNormal">Chaussure normal</option>
+                        <option value="ChausureSpécial">Chaussure spécial</option>
+                    </select>
+                    <label htmlFor="">Poids: </label>
+                    <input type="text" />
+                    <input type="submit" value={"Sauvegarder"} />
+                </form>
+            </div>
         </div>
     )
 }
 
-export default SessionDetail;
+export default SessionList;

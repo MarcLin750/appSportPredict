@@ -1,3 +1,4 @@
+/* Tab bar */
 .tab-bar{
     display: flex;
     justify-content: center;
@@ -23,102 +24,28 @@
     border-radius: 5%;
 }
 
+/* tab entrainements */
+
 .Entrainements{
-    height: 80vh;
+    height: 78vh;
     padding: 20px;
-    background-color: #f5f5f5;
+    background-color: #e7e7e7;
     display: flex;
     justify-content: space-between;
 }
+
+/* tab analyse */
 
 .Analyse{
     height: 80vh;
     padding: 20px;
-    background-color: #f5f5f5;
+    background-color: #e7e7e7;
 }
+
+/* tab chat bot */
 
 .Chat-GPT{
     height: 80vh;
     padding: 20px;
-    background-color: #f5f5f5;
-}
-
-/* Style SessionList */
-
-.title-session{
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: space-around;
-    background-color: white;
-}
-
-.session-list{
-    width: 20%;
-    background-color: white;
-}
-
-.SessionList_Ul {
-    margin: 0;
-    padding: 0;
-    height: 80%;
-    width: 100%;
-    background-color: white;
-    flex-direction: column-reverse;
-    overflow-y: scroll;
-    scrollbar-width: none;
-}
-
-.SessionList_Ul input{
-    display: none;
-}
-
-.SessionList_Ul label{
-    background-color: aqua;
-}
-
-.SessionDetail_Ul input:checked + label{
-    background-color: aqua;
-}
-
-.bg-disabled{
-    background-color: black;
-}
-
-.card{
-    padding-bottom: 5px;
-    padding: 10px;
-}
-
-.card-item{
-    padding-inline: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-item2{
-    padding-left: 10px;
-    display: inline;
-}
-
-/* Style SessionDetail */
-
-.entrainement{
-    width: 50%;
-    background-color: white;
-}
-
-.session-detail{
-    display: flex;
-    flex-direction: column;
-    margin: 40px;
-}
-
-.SessionDetail_Ul{
-    margin: 0;
-    padding: 0;
-    height: 90%;
-    background-color: white;
-    display: flex;
+    background-color: #e7e7e7;
 }
