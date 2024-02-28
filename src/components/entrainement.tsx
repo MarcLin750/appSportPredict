@@ -6,7 +6,7 @@ import '../styles/entrainement.css';
 const SessionList: FunctionComponent = () => {
     
     const [listOfSessions, setListOfSessions] = useState<ListOfSessions[]>([]);
-    
+    const [listSportName, setListSportName] = useState<string[]>([]);
     const [session, setSession] = useState<SESSIONDETAIL[]>([]);
     const [sessionID, setSessionID] = useState('');
 
@@ -29,6 +29,14 @@ const SessionList: FunctionComponent = () => {
             // console.log(LISTOFSESSIONS);
           });
     }, []);
+
+    useEffect(() => {
+        const sportName = new Set<string>();
+        listOfSessions.forEach(session => {
+            sportName.add(session.SPORT);
+        });
+        setListSportName(Array.from(sportName));
+    }, [listOfSessions])
 
     useEffect(() => {
         fetch('https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/lastsession')
@@ -93,6 +101,17 @@ const SessionList: FunctionComponent = () => {
             });
     }
 
+    const postFormSession = () => {
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({title: 'info post request'})
+        };
+        fetch('', options)
+            .then(response => response.json())
+            // .then(data => setPostId(data.id))
+
+    }
     
     const formatDate = (date: string):string =>{
 
@@ -114,15 +133,21 @@ const SessionList: FunctionComponent = () => {
     const formatDistance = (distance: number): string => {
         const [partOne] = distance.toString().split('.');
 
-        return `Distance: ${partOne} m.`
+        return `(${partOne} m)`
     }
 
     return (
         <div id="Entrainements" className="Entrainements">
             <div className="session-list">
                 <h2 className="title-session">Liste des entrainements</h2>
-                <div className="filtre-sessionlist">
-                    <button>Filtre</button>
+                <div className="filtre-sessionList">
+                    <select name="" id="">
+                        <option value="">Tous les entrainments</option>
+                        {listSportName.map((sport) => (
+                            <option value={sport}>{sport}</option>
+                        ))}
+                    </select>
+                    <button>Filtrer</button>
                 </div>
                 <ul className="SessionList_Ul">
                     {listOfSessions.map(session => (
@@ -130,6 +155,7 @@ const SessionList: FunctionComponent = () => {
                             <input type="radio" name="btn-session" id={session.SESSIONID} key={session.SESSIONID} onClick={() => goToSession(session.SESSIONID)} checked={sessionID === session.SESSIONID}/>
                                 <label htmlFor={session.SESSIONID} className="label-item">
                                         <strong> {session.SPORT} </strong>
+                                        <small>{formatDistance(session.DISTANCE)}</small>
                                         <small> {formatDate(session.SESSIONID)} </small>
                                 </label>
                         </li>
@@ -142,9 +168,7 @@ const SessionList: FunctionComponent = () => {
             <div className="TabSessionDetail">
             {session.map(session => (
                 <div className="session-detail" key={session.SESSIONID}>
-                    <div className="title-session-detail">
-                        <h1 style={{paddingLeft: "20px"}}>{session.SPORT}</h1>
-                    </div>
+                    <h2 className="title-session-detail">{session.SPORT}</h2>
                     <div className="session-detail-item">
                         <p>STARTTIME: {session.STARTTIME}</p>
                         <p>STOPTIME: {session.STOPTIME}</p>
@@ -165,8 +189,8 @@ const SessionList: FunctionComponent = () => {
                         
             {/* <EtatPhysique /> */}
             
-            <div className="etatPhysique">
-                <h1 style={{paddingLeft: "20px"}}>Etat Physique:</h1>
+            <div className="formEnriched">
+                <h2 className="title-form-enriched">Etat Physique:</h2>
                 <form action="">
                     <label htmlFor="">Ressenti de la session: </label>
                     <select name="" id="">

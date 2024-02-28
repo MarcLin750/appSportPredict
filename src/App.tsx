@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import Home from './pages/home';
 import NavBar from './components/nav-bar';
-import ConnexionPolar from './pages/connexionPolar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ConnexionPolar from './pages/connexionPolar';
 import PageNotFound from './pages/pages-not-found';
-
 import './styles/app.css'
 
 const App: FunctionComponent = () => {
@@ -13,6 +12,7 @@ const App: FunctionComponent = () => {
         <Router>
             <div className='body'>
                 <NavBar />
+                <img src="./SAP_logo.png" alt="" />
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/connexion-polar" component={ConnexionPolar} />
