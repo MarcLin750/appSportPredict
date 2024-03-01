@@ -6,6 +6,7 @@ import '../styles/entrainement.css';
 const SessionList: FunctionComponent = () => {
     
     const [listOfSessions, setListOfSessions] = useState<ListOfSessions[]>([]);
+    const [listOfSessionsFilter, setLlistOfSessionsFilter] = useState<ListOfSessions[]>([]);
     const [listSportName, setListSportName] = useState<string[]>([]);
     const [session, setSession] = useState<SESSIONDETAIL[]>([]);
     const [sessionID, setSessionID] = useState('');
@@ -22,32 +23,24 @@ const SessionList: FunctionComponent = () => {
               DURATION2: data[2],
               DISTANCE: data[3]
             }));
-            
             // Assignation des données formatées à LISTOFSESSIONS
             setListOfSessions(formattedData.reverse());
-        
             // console.log(LISTOFSESSIONS);
           });
     }, []);
 
     useEffect(() => {
-        const sportName = new Set<string>();
-        listOfSessions.forEach(session => {
-            sportName.add(session.SPORT);
-        });
-        setListSportName(Array.from(sportName));
-    }, [listOfSessions])
-
-    useEffect(() => {
         fetch('https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/lastsession')
          .then(res=> res.json())
-         .then(data => goToSession(data[0]))
+         .then(data => {
+            goToSession(data[0]);
+            console.log(data[0])
+    })
     }, []);
 
     const goToSession = (id: string) => {
         // console.log(id)
-        
-        fetch(`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getsession/?id=${id}`)
+        fetch(`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getsession?id=${id}`)
             .then(res => res.json())
             .then((data: any[]) => {   
                 const formattedData: SESSIONDETAIL[] = data.map(data => ({
@@ -98,8 +91,22 @@ const SessionList: FunctionComponent = () => {
                 }));
                 setSession(formattedData);
                 setSessionID(id)
+                console.log(id)
             });
     }
+
+    
+    useEffect(() => {
+        setLlistOfSessionsFilter(listOfSessions);
+    }, [listOfSessions]);
+
+    useEffect(() => {
+        const sportName = new Set<string>();
+        listOfSessions.forEach(session => {
+            sportName.add(session.SPORT);
+        });
+        setListSportName(Array.from(sportName));
+    }, [listOfSessions])
 
     const postFormSession = () => {
         const options = {
@@ -110,11 +117,9 @@ const SessionList: FunctionComponent = () => {
         fetch('', options)
             .then(response => response.json())
             // .then(data => setPostId(data.id))
-
     }
     
     const formatDate = (date: string):string =>{
-
         const [datePart, timePart] = date.split('T');
         const [year, month, day] = datePart.split('-');
         const [hourMinuteSecond] = timePart.split('.');
@@ -136,23 +141,31 @@ const SessionList: FunctionComponent = () => {
         return `(${partOne} m)`
     }
 
+    const sportNameFiltre = (event: string) => {
+        if (event === ""){
+            setLlistOfSessionsFilter(listOfSessions);
+        } else {
+            setLlistOfSessionsFilter(listOfSessions.filter(session => session.SPORT === event ));
+        }
+    }
+
     return (
         <div id="Entrainements" className="Entrainements">
             <div className="session-list">
                 <h2 className="title-session">Liste des entrainements</h2>
-                <div className="filtre-sessionList">
-                    <select name="" id="">
+                <form className="from-filter-session-list" onSubmit={(event) => {event.preventDefault()}}>
+                    <select id="sportName" onBlur={(event) => sportNameFiltre(event.target.value)}>
                         <option value="">Tous les entrainments</option>
                         {listSportName.map((sport) => (
                             <option value={sport}>{sport}</option>
                         ))}
                     </select>
-                    <button>Filtrer</button>
-                </div>
+                    <input type="submit" value="Filtrer" />
+                </form>
                 <ul className="SessionList_Ul">
-                    {listOfSessions.map(session => (
-                        <li>
-                            <input type="radio" name="btn-session" id={session.SESSIONID} key={session.SESSIONID} onClick={() => goToSession(session.SESSIONID)} checked={sessionID === session.SESSIONID}/>
+                    {listOfSessionsFilter.map(session => (
+                        <li key={session.SESSIONID}>
+                            <input type="radio" name="btn-session" id={session.SESSIONID} onClick={() => goToSession(session.SESSIONID)} checked={sessionID === session.SESSIONID} />
                                 <label htmlFor={session.SESSIONID} className="label-item">
                                         <strong> {session.SPORT} </strong>
                                         <small>{formatDistance(session.DISTANCE)}</small>
