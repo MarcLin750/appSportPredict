@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 import SessionList from "./entrainement";
 import '../styles/tab-home.css';
+import Analyse from "./analyse";
 
 
 const TabHome: FunctionComponent = () => {
@@ -21,15 +22,7 @@ const TabHome: FunctionComponent = () => {
                 <SessionList />
             )}
             {activeTab === 'Analyse' && (
-                <div id="Analyse" className="Analyse">
-                    <div className="analyse-graph">
-                        <h1>Montrer les optimisations possibles</h1>
-                        <div className="graph-image">
-                            <img src="https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getgraph?graph=segment" className="graph-segment" />
-                            <img src="https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getgraph?graph=timeinzone" className="graph-timeinzone" />
-                        </div>
-                    </div>
-                </div>
+                <Analyse />
             )}
             {activeTab === 'Chat-GPT' && (
                 <div id="Chat-GPT" className="Chat-GPT">

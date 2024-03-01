@@ -34,7 +34,6 @@ const SessionList: FunctionComponent = () => {
          .then(res=> res.json())
          .then(data => {
             goToSession(data[0]);
-            console.log(data[0])
     })
     }, []);
 

@@ -23,7 +23,7 @@
 .SessionList_Ul {
     margin: 0;
     padding: 0;
-    max-height: 55vh;
+    max-height: 58vh;
     width: 100%;
     background-color: white;
     flex-direction: column-reverse;

@@ -18,10 +18,10 @@ const App: FunctionComponent = () => {
                     <Route exact path="/connexion-polar" component={ConnexionPolar} />
                     <Route component={PageNotFound} />
                 </Switch>
-                <footer>
-                    <h6>
-                        Footer
-                    </h6>
+                <footer style={{padding: "20px"}}>
+                    <h4>
+                        &copy;SAP Sport Predict
+                    </h4>
                 </footer>
             </div>
         </Router>
