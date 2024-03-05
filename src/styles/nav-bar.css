@@ -19,8 +19,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: white;
 }
 
 .sapLogo{
     width: 80px;
+}
+
+.baniere{
+    padding-left: 40px;
+    height: 60px;
 }

@@ -8,6 +8,7 @@ const NavBar: FunctionComponent = () => {
             <div className="navLogo">
                 <a href="/"><img src="../images/SAP_logo.png" className="sapLogo" alt="SAP" /></a>
                 <a className="navTitle" href="/">Sport Predict</a>
+                <img src="../images/baniere.png" className="baniere"/>
             </div>
        </nav>
     )

@@ -34,7 +34,7 @@ const Analyse: FunctionComponent = () => {
     return(
         <div id="Analyse" className="Analyse">
             <div className="analyse-graph">
-                <h1>Montrer les optimisations possibles</h1>
+                <h1>Graph segment / sequence</h1>
                 <div id="popup-bg">
                     <div id="popup-content">
                         <div id="popup-close">
@@ -46,11 +46,11 @@ const Analyse: FunctionComponent = () => {
                 <div className="grid">
                     <div className="grid-item" id="segment">
                         <img src="../images/segmentIcon.png" alt="graph segment" className="grid-img" />
-                        <p>Graph segment</p>
+                        <p>Segment</p>
                     </div>
                     <div className="grid-item" id="timeinzone">
                         <img src="../images/timeInZoneIcon.png" alt="graph time in zone" className="grid-img" />
-                        <p>Graph time in zone</p>
+                        <p>Sequence</p>
                     </div>
                 </div>
             </div>

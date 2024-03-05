@@ -32,9 +32,7 @@ const SessionList: FunctionComponent = () => {
     useEffect(() => {
         fetch('https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/lastsession')
          .then(res=> res.json())
-         .then(data => {
-            goToSession(data[0]);
-    })
+         .then(data => {goToSession(data[0])})
     }, []);
 
     const goToSession = (id: string) => {
@@ -90,7 +88,7 @@ const SessionList: FunctionComponent = () => {
                 }));
                 setSession(formattedData);
                 setSessionID(id)
-                console.log(id)
+                // console.log(id)
             });
     }
 

@@ -12,7 +12,6 @@ const App: FunctionComponent = () => {
         <Router>
             <div className='body'>
                 <NavBar />
-                <img src="./SAP_logo.png" alt="" />
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/connexion-polar" component={ConnexionPolar} />
