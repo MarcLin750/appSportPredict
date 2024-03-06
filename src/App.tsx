@@ -4,6 +4,7 @@ import NavBar from './components/nav-bar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ConnexionPolar from './pages/connexionPolar';
 import PageNotFound from './pages/pages-not-found';
+import Footer from './components/footer';
 import './styles/app.css'
 
 const App: FunctionComponent = () => {
@@ -17,11 +18,7 @@ const App: FunctionComponent = () => {
                     <Route exact path="/connexion-polar" component={ConnexionPolar} />
                     <Route component={PageNotFound} />
                 </Switch>
-                <footer style={{padding: "20px"}}>
-                    <h4>
-                        &copy;SAP Sport Predict
-                    </h4>
-                </footer>
+                <Footer />
             </div>
         </Router>
     )

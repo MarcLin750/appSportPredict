@@ -3,7 +3,7 @@ import SESSIONDETAIL from "../models/session-detail";
 import ListOfSessions from "../models/listofsessions";
 import '../styles/entrainement.css';
 
-const SessionList: FunctionComponent = () => {
+const Entrainements: FunctionComponent = () => {
     
     const [listOfSessions, setListOfSessions] = useState<ListOfSessions[]>([]);
     const [listOfSessionsFilter, setLlistOfSessionsFilter] = useState<ListOfSessions[]>([]);
@@ -225,4 +225,4 @@ const SessionList: FunctionComponent = () => {
     )
 }
 
-export default SessionList;
+export default Entrainements;

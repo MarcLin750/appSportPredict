@@ -1,8 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
-import SessionList from "./entrainement";
+import Entrainements from "./entrainements";
 import '../styles/tab-home.css';
 import Analyse from "./analyse";
-
 
 const TabHome: FunctionComponent = () => {
 
@@ -21,7 +20,7 @@ const TabHome: FunctionComponent = () => {
                 <label htmlFor="AnalyseAxe3">Plage de données</label>
             </div>
             {activeTab === 'Entrainements' && (
-                <SessionList />
+                <Entrainements />
             )}
             {activeTab === 'AnalyseAxe1' && (
                 <Analyse />
