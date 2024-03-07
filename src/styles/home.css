@@ -5,7 +5,7 @@
 
 /* style bouton radio menu */
 
-.menu{
+/* .menu{
     display: flex;
     justify-content: flex-end;
 }
@@ -28,4 +28,11 @@
     color: white;
     background-color: #1c52cf;
     border: 2px double #1c52cf;
+} */
+
+
+@media screen and (max-width: 1400px) {
+    .home{
+        padding-top: 4rem;
+    }
 }
