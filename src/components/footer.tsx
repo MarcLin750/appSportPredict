@@ -1,11 +1,15 @@
 import React, {FunctionComponent} from "react";
+import '../styles/footer.css';
 
 const Footer: FunctionComponent = () => {
     return(
-        <footer style={{padding: "20px", backgroundColor:"white"}}>
-            <h4>
+        <footer>
+            <h5>
                 &copy;SAP Sport Predict
-            </h4>
+            </h5>
+            <h6>
+                SAP France Hackathon 2024
+            </h6>
         </footer>
     )
 }

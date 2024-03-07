@@ -149,7 +149,7 @@ const Entrainements: FunctionComponent = () => {
     return (
         <div id="Entrainements" className="Entrainements">
             <div className="session-list">
-                <h2 className="title-session">Liste des entrainements</h2>
+                <h3 className="title-session">Liste des entrainements</h3>
                 <form className="from-filter-session-list" onSubmit={(event) => {event.preventDefault()}}>
                     <select id="sportName" onBlur={(event) => sportNameFiltre(event.target.value)}>
                         <option value="">Tous les entrainments</option>
@@ -178,7 +178,7 @@ const Entrainements: FunctionComponent = () => {
             <div className="TabSessionDetail">
             {session.map(session => (
                 <div className="session-detail" key={session.SESSIONID}>
-                    <h2 className="title-session-detail">{session.SPORT}</h2>
+                    <h3 className="title-session-detail">{session.SPORT}</h3>
                     <div className="session-detail-item">
                         <p>STARTTIME: {session.STARTTIME}</p>
                         <p>STOPTIME: {session.STOPTIME}</p>
@@ -200,7 +200,7 @@ const Entrainements: FunctionComponent = () => {
             {/* <EtatPhysique /> */}
             
             <div className="formEnriched">
-                <h2 className="title-form-enriched">Etat Physique:</h2>
+                <h3 className="title-form-enriched">Enriched</h3>
                 <form action="">
                     <label htmlFor="">Ressenti de la session: </label>
                     <select name="" id="">
@@ -216,8 +216,12 @@ const Entrainements: FunctionComponent = () => {
                         <option value="ChaussureNormal">Chaussure normal</option>
                         <option value="ChausureSpécial">Chaussure spécial</option>
                     </select>
+                    <div>
+                        <input type="checkbox" id="verified" />
+                        <label htmlFor="verified">Session vérifier</label>
+                    </div>
                     <label htmlFor="">Poids: </label>
-                    <input type="text" />
+                    <input type="number" value="70" />
                     <input type="submit" value={"Sauvegarder"} />
                 </form>
             </div>

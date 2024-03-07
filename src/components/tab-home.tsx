@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 import Entrainements from "./entrainements";
 import '../styles/tab-home.css';
-import Analyse from "./analyse";
+import AnalyseAxe1 from "./analyse-axe1";
 
 const TabHome: FunctionComponent = () => {
 
@@ -23,7 +23,7 @@ const TabHome: FunctionComponent = () => {
                 <Entrainements />
             )}
             {activeTab === 'AnalyseAxe1' && (
-                <Analyse />
+                <AnalyseAxe1 />
             )}
             {activeTab === 'AnalyseAxe2' && (
                 <div id="AnalyseAxe2" className="AnalyseAxe2">

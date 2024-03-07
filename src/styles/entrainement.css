@@ -1,20 +1,29 @@
+/* tab entrainements */
+
+.Entrainements{
+    height: 82vh;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
 
 /* Style SessionList */
 
 .title-session{
-    padding-left: 8%;
-    padding-bottom: 5%;
+    padding: 14px;
     border-bottom: black solid 1px;
 }
 
 .from-filter-session-list{
+    margin-bottom: 10px;
     display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     justify-content: space-around;
-    flex-direction: row;
 }
 
 .session-list{
-    width: 20%;
+    width: 22%;
     background-color: white;
     border-radius: 20px;
     box-shadow: 0px 0px 8px rgb(59, 59, 59);
@@ -32,7 +41,6 @@
     border-top: black solid 1px;
     border-bottom: black solid 1px;
 }
-
 
 /* Session List radio button style */
 
@@ -64,10 +72,15 @@
 
 /* Style SessionDetail */
 
+.title-session-detail{
+    padding: 14px;
+    border-bottom: black solid 1px;
+}
+
 .TabSessionDetail{
     margin: 0;
     padding: 0;
-    width: 50%;
+    width: 52%;
     height: 100%;
     background-color: white;
     display: flex;
@@ -76,34 +89,99 @@
     box-shadow: 0px 0px 8px rgb(59, 59, 59);
 }
 
-.title-session-detail{
-    padding-left: 5%;
-    padding-bottom: 2%;
-    border-bottom: black solid 1px;
-}
-
 .session-detail-item{
     margin: 20px;
 }
 
-
 /* Form */
 
-.formEnriched{
-    background-color: white;
-    width: 25%;
-    border-radius: 20px;
-    box-shadow: 0px 0px 8px rgb(59, 59, 59);
-}
-
 .title-form-enriched{
-    padding-left: 8%;
-    padding-bottom: 5%;
+    padding: 14px;
     border-bottom: black solid 1px;
 }
 
-form{
+.formEnriched{
+    background-color: white;
+    width: 22%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 8px rgb(59, 59, 59);
+}
+.formEnriched form{
     padding: 20px;
     display: flex;
     flex-direction: column;
+}
+
+@media screen and (max-width: 1400px) {
+    /* tab entrainements */
+
+    .Entrainements{
+        height: 120vh;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    /* Style SessionList */
+
+    .title-session{
+        padding: 10px;
+        font-size: 20px;
+    }
+
+    .from-filter-session-list select{
+        width: 40%;
+    }
+
+    .session-list{
+        width: 40%;
+        height: 74vh;
+    }
+
+    .SessionList_Ul {
+        max-height: 58vh;
+        scrollbar-width: none;
+    }
+
+    /* Session List radio button style */
+
+    .label-item{
+        padding: 10px;
+    }
+
+    /* Style SessionDetail */
+
+    .title-session-detail{
+        padding: 10px;
+        font-size: 20px;
+    }
+
+    .TabSessionDetail{
+        width: 50vw;
+        height: 74vh;
+    }
+
+    .session-detail-item{
+        margin: 6px;
+    }
+
+    /* Form */
+
+    .title-form-enriched{
+        padding: 10px;
+        font-size: 20px;
+    }
+
+    .formEnriched{
+        margin-top: 0px;
+        width: 100%;
+        height: 30%;
+        border-radius: 20px;
+        box-shadow: 0px 0px 8px rgb(59, 59, 59);
+    }
+    .formEnriched form{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
 }

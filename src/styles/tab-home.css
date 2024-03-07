@@ -5,7 +5,8 @@
 }
 
 .tab-bar{
-    margin: 10px;
+    margin-inline: 20px;
+    margin-block: 12px;
     display: flex;
     justify-content: center;
     border-radius: 20px;
@@ -33,18 +34,48 @@
     border-radius: 5%;
 }
 
-/* tab entrainements */
-
-.Entrainements{
-    height: 80vh;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
 /* tab analyse */
 
-.Analyse{
-    height: 80vh;
+.AnalyseAxe1{
+    height: 82vh;
     padding: 20px;
+}
+
+.AnalyseAxe2{
+    height: 82vh;
+    padding: 20px;
+}
+
+.AnalyseAxe3{
+    height: 82vh;
+    padding: 20px;
+}
+
+
+@media screen and (max-width: 1400px) {
+    .tab-bar{
+        margin-inline: 20px;
+        margin-block: 0;
+        display: flex;
+        flex-direction: column;
+        border-radius: 20px;
+        background-color: white;
+        box-shadow: 1px 1px 4px;
+    }
+
+    .tab-bar label {
+        text-align: center;
+        padding: 2px;
+        margin-inline: 20%;
+        border-bottom: 2px white solid;
+        border-radius: 20px;
+    }
+    
+    .tab-bar input:checked + label{
+        text-align: center;
+        padding: 2px;
+        margin-inline: 20%;
+        border-bottom: 2px #1c52cf solid;
+        border-radius: 0px;
+    }
 }

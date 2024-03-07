@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect } from "react";
-import '../styles/analyse.css'
+import '../styles/analyse-axe1.css'
 
-const Analyse: FunctionComponent = () => {
+const AnalyseAxe1: FunctionComponent = () => {
 
     useEffect(() => {
         let allGridItems = Array.from(document.getElementsByClassName("grid-item"));
@@ -32,7 +32,7 @@ const Analyse: FunctionComponent = () => {
     }, []);
     
     return(
-        <div id="Analyse" className="Analyse">
+        <div id="Analyse" className="AnalyseAxe1">
             <div className="analyse-graph">
                 <h1>Graph segment / sequence</h1>
                 <div id="popup-bg">
@@ -58,4 +58,4 @@ const Analyse: FunctionComponent = () => {
     )
 }
 
-export default Analyse;
+export default AnalyseAxe1;

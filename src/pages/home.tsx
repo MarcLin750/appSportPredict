@@ -13,7 +13,7 @@ const Home: FunctionComponent = () =>{
     // }
 
     return(
-        <div>
+        <div className="home">
             {/* <div className="menu">
                 <input type="radio" name="btn-home" id="Sauvegarder" />
                 <label htmlFor="Sauvegarder">Sauvegarder</label>
