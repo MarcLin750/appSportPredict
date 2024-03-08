@@ -54,7 +54,7 @@ const Entrainements: FunctionComponent = () => {
     const getListOfSessions = (dateFrom: string, dateTo?: string) => {
         // Appel à l'API et traitement des données
         fetch(`${apiSportPredicLink}/listofsessions?fromSession=${dateFrom}&toSession=${dateTo}`)
-          .then(response => response.json())
+          .then(response => response.json()) 
           .then((data: any[]) => {
             // Mapping des données et formatage
             const formattedData: ListOfSessions[] = data.map(data => ({
@@ -241,25 +241,25 @@ const Entrainements: FunctionComponent = () => {
             {/* <EtatPhysique /> */}
             
             <div className="formEnriched">
-                <h3 className="title-form-enriched">Enriched</h3>
+                <h3 className="title-form-enriched">Données complémentaires</h3>
                 <form action="">
                     <label htmlFor="">Ressenti de la session: </label>
                     <select name="" id="">
-                        <option value="">-- Choisi ton état physique --</option>
-                        <option value="TresFatiguer">Très Fatiguer</option>
-                        <option value="Fatiguer">Fatiguer</option>
+                        <option value="">-- Choisis ton état physique --</option>
+                        <option value="TresFatiguer">Très Fatigué</option>
+                        <option value="Fatiguer">Fatigué</option>
                         <option value="EnForme">En forme</option>
                         <option value="Super">Super</option>
                     </select>
                     <label htmlFor="">Type d'équipement</label>
                     <select name="" id="">
-                        <option value="">-- Choisi ton équipement --</option>
-                        <option value="ChaussureNormal">Chaussure normal</option>
-                        <option value="ChausureSpécial">Chaussure spécial</option>
+                        <option value="">-- Choisis ton équipement --</option>
+                        <option value="ChaussureNormal">Chaussures normales</option>
+                        <option value="ChausureSpécial">Chaussures spéciales</option>
                     </select>
                     <div>
                         <input type="checkbox" id="verified" />
-                        <label htmlFor="verified">Session vérifier</label>
+                        <label htmlFor="verified">Session vérifiée</label>
                     </div>
                     <label htmlFor="">Poids: </label>
                     <input type="number" value="70" />
