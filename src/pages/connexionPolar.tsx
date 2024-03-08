@@ -33,22 +33,14 @@ const ConnexionPolar: FunctionComponent = () => {
       <h1>Polar Info</h1>
       <button onClick={handleClick}>Afficher les sessions</button>
       <div>
-        {/* {sessions.map((session, i) =>  (
-            <div key={i}>
-                "session_id": "{session[0]}",
-                "sport": "{session[1]}",
-                "duration2": "{session[2]}",
-                "distance": "{session[3]}"
-            </div>
-        ))} */}
-         {sessions.map((session, i) => (
+         {/* {sessions.map((session, i) => (
             <div key={i}>
               <p>Session ID: {session.session_id}</p>
               <p>Sport: {session.sport}</p>
               <p>Duration: {session.duration2}</p>
               <p>Distance: {session.distance}</p>
             </div>
-          ))}
+          ))} */}
       </div>
     </div>
   )

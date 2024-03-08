@@ -10,10 +10,53 @@ const Entrainements: FunctionComponent = () => {
     const [listSportName, setListSportName] = useState<string[]>([]);
     const [session, setSession] = useState<SESSIONDETAIL[]>([]);
     const [sessionID, setSessionID] = useState('');
+    const apiSportPredicLink = 'https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com';
+    const [defaultDate, setDefaultDate] = useState('');
+    const [defaultCurrentDate, setDefaultCurrentDate] = useState('');
+    
+    const [dateFrom, setDateFrom] = useState('');
+    const [dateTo, setDateTo] = useState('');
+
+    // Récupère la liste des sessions
+    useEffect(() => {
+        const formattedDate = getDate();
+        setDefaultDate(formattedDate);
+        // console.log(formattedDate);
+        getListOfSessions(formattedDate);
+    }, []);
 
     useEffect(() => {
+        fetch(`${apiSportPredicLink}/lastsession`)
+         .then(res=> res.json())
+         .then(data => {goToSession(data)})
+    }, []);
+
+    useEffect(() => {
+        setLlistOfSessionsFilter(listOfSessions);
+    }, [listOfSessions]);
+
+    useEffect(() => {
+        const sportName = new Set<string>();
+        listOfSessions.forEach(session => {
+            sportName.add(session.SPORT);
+        });
+        setListSportName(Array.from(sportName));
+    }, [listOfSessions])
+
+    const getDate = () => {
+        const dateNow = new Date();
+        const year = dateNow.getFullYear() - 1; // 2023 car pas de session 2024 ...
+        const month = dateNow.getMonth() + 1 <= 1 ? dateNow.getMonth() + 1 : dateNow.getMonth(); // recule de 2 mois 
+        const day = dateNow.getDay();
+        const newmonth = month < 10 ? '0' + month : month; // ajoute un 0 si la mois contient qu'un chiffre 
+        const newday = day < 10 ? '0' + day : day;
+
+        return `${year}-${newmonth}-${newday}`;
+    }
+
+    const getListOfSessions = (dateFrom: string, dateTo?: string) => {
         // Appel à l'API et traitement des données
-        fetch('https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/listofsessions')
+        fetch(`${apiSportPredicLink}/listofsessions?fromSession=${dateFrom}&toSession=${dateTo}`)
           .then(response => response.json())
           .then((data: any[]) => {
             // Mapping des données et formatage
@@ -24,20 +67,26 @@ const Entrainements: FunctionComponent = () => {
               DISTANCE: data[3]
             }));
             // Assignation des données formatées à LISTOFSESSIONS
-            setListOfSessions(formattedData.reverse());
-            // console.log(LISTOFSESSIONS);
+            setListOfSessions(formattedData);
+            // console.log(listOfSessions);
           });
-    }, []);
+    }
 
-    useEffect(() => {
-        fetch('https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/lastsession')
-         .then(res=> res.json())
-         .then(data => {goToSession(data[0])})
-    }, []);
+    const getDateFrom = (event: string) => {
+        setDateFrom(event);
+    }
+
+    const getDateTo = (event: string) => {
+        setDateTo(event);
+    }
+
+    const getListOfSessionsFromTo = () => {
+        getListOfSessions(dateFrom, dateTo);
+    }
 
     const goToSession = (id: string) => {
         // console.log(id)
-        fetch(`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getsession?id=${id}`)
+        fetch(`${apiSportPredicLink}/getsession?id=${id}`)
             .then(res => res.json())
             .then((data: any[]) => {   
                 const formattedData: SESSIONDETAIL[] = data.map(data => ({
@@ -92,19 +141,6 @@ const Entrainements: FunctionComponent = () => {
             });
     }
 
-    
-    useEffect(() => {
-        setLlistOfSessionsFilter(listOfSessions);
-    }, [listOfSessions]);
-
-    useEffect(() => {
-        const sportName = new Set<string>();
-        listOfSessions.forEach(session => {
-            sportName.add(session.SPORT);
-        });
-        setListSportName(Array.from(sportName));
-    }, [listOfSessions])
-
     const postFormSession = () => {
         const options = {
             method: 'POST',
@@ -133,8 +169,8 @@ const Entrainements: FunctionComponent = () => {
     }
 
     const formatDistance = (distance: number): string => {
-        const [partOne] = distance.toString().split('.');
-
+        const distanceTrue = distance ? distance : 0;
+        const [partOne] = distanceTrue.toString().split('.');
         return `(${partOne} m)`
     }
 
@@ -150,13 +186,21 @@ const Entrainements: FunctionComponent = () => {
         <div id="Entrainements" className="Entrainements">
             <div className="session-list">
                 <h3 className="title-session">Liste des entrainements</h3>
-                <form className="from-filter-session-list" onSubmit={(event) => {event.preventDefault()}}>
+                <form className="from-filter-session-list" onSubmit={(event) => {event.preventDefault(); getListOfSessionsFromTo()}}>
                     <select id="sportName" onBlur={(event) => sportNameFiltre(event.target.value)}>
                         <option value="">Tous les entrainments</option>
                         {listSportName.map((sport) => (
                             <option value={sport}>{sport}</option>
                         ))}
                     </select>
+                    <label>
+                        Du:
+                        <input type="date" onBlur={(event) => getDateFrom(event.target.value)}/>
+                    </label>
+                    <label>
+                        Au:
+                        <input type="date" onBlur={(event) => getDateTo(event.target.value)}/>
+                    </label>
                     <input type="submit" value="Filtrer" />
                 </form>
                 <ul className="SessionList_Ul">
@@ -196,7 +240,7 @@ const Entrainements: FunctionComponent = () => {
                 </div>
             ))}
             </div>
-                        
+
             {/* <EtatPhysique /> */}
             
             <div className="formEnriched">
