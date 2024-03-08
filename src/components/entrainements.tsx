@@ -11,8 +11,6 @@ const Entrainements: FunctionComponent = () => {
     const [session, setSession] = useState<SESSIONDETAIL[]>([]);
     const [sessionID, setSessionID] = useState('');
     const apiSportPredicLink = 'https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com';
-    const [defaultDate, setDefaultDate] = useState('');
-    const [defaultCurrentDate, setDefaultCurrentDate] = useState('');
     
     const [dateFrom, setDateFrom] = useState('');
     const [dateTo, setDateTo] = useState('');
@@ -20,7 +18,6 @@ const Entrainements: FunctionComponent = () => {
     // Récupère la liste des sessions
     useEffect(() => {
         const formattedDate = getDate();
-        setDefaultDate(formattedDate);
         // console.log(formattedDate);
         getListOfSessions(formattedDate);
     }, []);
