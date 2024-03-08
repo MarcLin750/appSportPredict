@@ -10,3 +10,4 @@ Login into CF
 Build react + push
 
     npm run build
+    cf push
