@@ -18,7 +18,11 @@ const Entrainements: FunctionComponent = () => {
     // Récupère la liste des sessions
     useEffect(() => {
         const formattedDate = getDate();
+        const formattedDateNow = getDateNow();
         // console.log(formattedDate);
+
+        setDateFrom(formattedDate);
+        setDateTo(formattedDateNow);
         getListOfSessions(formattedDate);
     }, []);
 
@@ -51,6 +55,17 @@ const Entrainements: FunctionComponent = () => {
         return `${year}-${newmonth}-${newday}`;
     }
 
+    const getDateNow = () => {
+        const dateNow = new Date();
+        const year = dateNow.getFullYear(); // 2023 car pas de session 2024 ...
+        const month = dateNow.getMonth() + 1; // recule de 2 mois 
+        const day = dateNow.getDay();
+        const newmonth = month < 10 ? '0' + month : month; // ajoute un 0 si la mois contient qu'un chiffre 
+        const newday = day < 10 ? '0' + day : day;
+
+        return `${year}-${newmonth}-${newday}`;
+    }
+
     const getListOfSessions = (dateFrom: string, dateTo?: string) => {
         // Appel à l'API et traitement des données
         fetch(`${apiSportPredicLink}/listofsessions?fromSession=${dateFrom}&toSession=${dateTo}`)
@@ -76,6 +91,14 @@ const Entrainements: FunctionComponent = () => {
     const getDateTo = (event: string) => {
         setDateTo(event);
     }
+
+    const handleDateChange = (event: any) => {
+        setDateFrom(event.target.value);
+    };
+
+    const handleDateNowChange = (event: any) => {
+        setDateTo(event.target.value);
+    };
 
     const getListOfSessionsFromTo = () => {
         getListOfSessions(dateFrom, dateTo);
@@ -184,21 +207,19 @@ const Entrainements: FunctionComponent = () => {
             <div className="session-list">
                 <h3 className="title-session">Liste des entrainements</h3>
                 <form className="from-filter-session-list" onSubmit={(event) => {event.preventDefault(); getListOfSessionsFromTo()}}>
-                    <select id="sportName" onBlur={(event) => sportNameFiltre(event.target.value)}>
+                    <select className="form-select form-select-sm m-2" id="sportName" onChange={(event) => sportNameFiltre(event.target.value)}>
                         <option value="">Tous les entrainments</option>
                         {listSportName.map((sport) => (
-                            <option value={sport}>{sport}</option>
+                            <option key={sport} value={sport}>{sport}</option>
                         ))}
                     </select>
-                    <label>
-                        Du:
-                        <input type="date" onBlur={(event) => getDateFrom(event.target.value)}/>
-                    </label>
-                    <label>
-                        Au:
-                        <input type="date" onBlur={(event) => getDateTo(event.target.value)}/>
-                    </label>
-                    <input type="submit" value="Filtrer" />
+                    <div className="input-group input-group-sm m-2">
+                        <span className="input-group-text">Du</span>
+                        <input type="date" className="form-control" value={dateFrom} onChange={(event) => {handleDateChange(event)}} onBlur={(event) => getDateFrom(event.target.value)}/>
+                        <span className="input-group-text">au</span>
+                        <input type="date" className="form-control" value={dateTo} onChange={(event) => {handleDateNowChange(event)}} onBlur={(event) => getDateTo(event.target.value)}/>
+                    </div>
+                    <input type="submit" value="Filtrer" className="btn btn-primary" />
                 </form>
                 <ul className="SessionList_Ul">
                     {listOfSessionsFilter.map(session => (
