@@ -10,12 +10,13 @@ const AnalyseAxe1: FunctionComponent = () => {
     
         const openPopup = (e: Event) => {
             if (e instanceof MouseEvent) {
-            let gridItemClicked = (e.target as Element).closest(".grid-item");
-            if (gridItemClicked) {
-                let clickedImageName = gridItemClicked.id;
-                popupBg.classList.add("active");
-                popupImg.src = `https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getgraph?graph=${clickedImageName}`;
-            }}
+                let gridItemClicked = (e.target as Element).closest(".grid-item");
+                if (gridItemClicked) {
+                    let clickedImageName = gridItemClicked.id;
+                    popupBg.classList.add("active");
+                    popupImg.src = `https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getgraph?graph=${clickedImageName}`; 
+                }
+            }
         };
 
         const closePopup = () => {
@@ -51,6 +52,19 @@ const AnalyseAxe1: FunctionComponent = () => {
                     <div className="grid-item" id="timeinzone">
                         <img src="../images/timeInZoneIcon.png" alt="graph time in zone" className="grid-img" />
                         <p>Sequence</p>
+                    </div>
+                    <div  id="distpersession">
+                        {/* <img src="../images/graph_distance_per_session.png" alt="graph segment" className="" onclick="{() => { openLink() }}" /> */}
+
+                        {/* <img src="../images/graph_distance_per_session.png" alt="graph segment" className="" onclick="{() => { openLink() }}" /> */}
+
+                        <p>Distance per session
+                        <div className='new-line'>
+                            <a target="_blank" href="https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/graph?name=dist_per_session&sessionFrom=2022-01-01&sessionTo=2022-12-31"><img src="../images/graph_distance_per_session.png" title="Distance per Session" alt="Distance per Session" style={{ width: 150, height: 150 }} /></a>
+                        </div>
+                        
+                        </p>
+                        
                     </div>
                 </div>
             </div>
