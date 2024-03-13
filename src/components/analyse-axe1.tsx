@@ -45,12 +45,20 @@ const AnalyseAxe1: FunctionComponent = () => {
                 </div>
                 <div className="grid">
                     <div className="grid-item" id="segment">
-                        <img src="../images/segmentIcon.png" alt="graph segment" className="grid-img" />
+                        <img src="../images/segmentIcon.png" alt="graph_segment" className="grid-img" />
                         <p>Segment</p>
                     </div>
                     <div className="grid-item" id="timeinzone">
-                        <img src="../images/timeInZoneIcon.png" alt="graph time in zone" className="grid-img" />
+                        <img src="../images/timeInZoneIcon.png" alt="graph_time_in_zone" className="grid-img" />
                         <p>Sequence</p>
+                    </div>
+                    <div className="grid-item" id="name=dist_per_session"> {/* à corriger */}
+                        <img src="../images/dist_per_session.png" alt="dist_per_session" className="grid-img" />
+                        <p>Distance par session</p>
+                    </div>
+                    <div className="grid-item" id="name=chart_ratio_speed_heartrate_in_sequences">
+                        <img src="../images/speed_vs_heartrate.png" alt="chart_ratio_speed_heartrate_in_sequences" className="grid-img" />
+                        <p>Speed Vs HeartRate</p>
                     </div>
                 </div>
             </div>

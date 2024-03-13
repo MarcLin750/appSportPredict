@@ -6,7 +6,7 @@ import '../styles/entrainement.css';
 const Entrainements: FunctionComponent = () => {
     
     const [listOfSessions, setListOfSessions] = useState<ListOfSessions[]>([]);
-    const [listOfSessionsFilter, setLlistOfSessionsFilter] = useState<ListOfSessions[]>([]);
+    const [listOfSessionsFilterSport, setLlistOfSessionsFilterSport] = useState<ListOfSessions[]>([]);
     const [listSportName, setListSportName] = useState<string[]>([]);
     const [session, setSession] = useState<SESSIONDETAIL[]>([]);
     const [sessionID, setSessionID] = useState('');
@@ -15,16 +15,18 @@ const Entrainements: FunctionComponent = () => {
     const [dateFrom, setDateFrom] = useState('');
     const [dateTo, setDateTo] = useState('');
 
-    // Récupère la liste des sessions
+    // Récupère les dates pour le filtre
     useEffect(() => {
         const formattedDate = getDate();
         const formattedDateNow = getDateNow();
         // console.log(formattedDate);
-
         setDateFrom(formattedDate);
         setDateTo(formattedDateNow);
-        getListOfSessions(formattedDate);
     }, []);
+
+    useEffect(() =>  {
+        getListOfSessions(dateFrom, dateTo);
+    }, [dateFrom, dateTo]);
 
     useEffect(() => {
         fetch(`${apiSportPredicLink}/lastsession`)
@@ -33,7 +35,7 @@ const Entrainements: FunctionComponent = () => {
     }, []);
 
     useEffect(() => {
-        setLlistOfSessionsFilter(listOfSessions);
+        setLlistOfSessionsFilterSport(listOfSessions);
     }, [listOfSessions]);
 
     useEffect(() => {
@@ -66,7 +68,7 @@ const Entrainements: FunctionComponent = () => {
         return `${year}-${newmonth}-${newday}`;
     }
 
-    const getListOfSessions = (dateFrom: string, dateTo?: string) => {
+    const getListOfSessions = (dateFrom?: string, dateTo?: string) => {
         // Appel à l'API et traitement des données
         fetch(`${apiSportPredicLink}/listofsessions?fromSession=${dateFrom}&toSession=${dateTo}`)
           .then(response => response.json()) 
@@ -90,18 +92,6 @@ const Entrainements: FunctionComponent = () => {
 
     const getDateTo = (event: string) => {
         setDateTo(event);
-    }
-
-    const handleDateChange = (event: any) => {
-        setDateFrom(event.target.value);
-    };
-
-    const handleDateNowChange = (event: any) => {
-        setDateTo(event.target.value);
-    };
-
-    const getListOfSessionsFromTo = () => {
-        getListOfSessions(dateFrom, dateTo);
     }
 
     const goToSession = (id: string) => {
@@ -196,9 +186,9 @@ const Entrainements: FunctionComponent = () => {
 
     const sportNameFiltre = (event: string) => {
         if (event === ""){
-            setLlistOfSessionsFilter(listOfSessions);
+            setLlistOfSessionsFilterSport(listOfSessions);
         } else {
-            setLlistOfSessionsFilter(listOfSessions.filter(session => session.SPORT === event ));
+            setLlistOfSessionsFilterSport(listOfSessions.filter(session => session.SPORT === event ));
         }
     }
 
@@ -206,7 +196,7 @@ const Entrainements: FunctionComponent = () => {
         <div id="Entrainements" className="Entrainements">
             <div className="session-list">
                 <h3 className="title-session">Liste des entrainements</h3>
-                <form className="from-filter-session-list" onSubmit={(event) => {event.preventDefault(); getListOfSessionsFromTo()}}>
+                <form className="from-filter-session-list" onSubmit={(event) => {event.preventDefault()}} >
                     <select className="form-select form-select-sm m-2" id="sportName" onChange={(event) => sportNameFiltre(event.target.value)}>
                         <option value="">Tous les entrainments</option>
                         {listSportName.map((sport) => (
@@ -215,14 +205,13 @@ const Entrainements: FunctionComponent = () => {
                     </select>
                     <div className="input-group input-group-sm m-2">
                         <span className="input-group-text">Du</span>
-                        <input type="date" className="form-control" value={dateFrom} onChange={(event) => {handleDateChange(event)}} onBlur={(event) => getDateFrom(event.target.value)}/>
+                        <input type="date" className="form-control" value={dateFrom} onChange={(event) => getDateFrom(event.target.value)} />
                         <span className="input-group-text">au</span>
-                        <input type="date" className="form-control" value={dateTo} onChange={(event) => {handleDateNowChange(event)}} onBlur={(event) => getDateTo(event.target.value)}/>
+                        <input type="date" className="form-control" value={dateTo} onChange={(event) => getDateTo(event.target.value)} />
                     </div>
-                    <input type="submit" value="Filtrer" className="btn btn-primary" />
                 </form>
                 <ul className="SessionList_Ul">
-                    {listOfSessionsFilter.map(session => (
+                    {listOfSessionsFilterSport.map(session => (
                         <li key={session.SESSIONID}>
                             <input type="radio" name="btn-session" id={session.SESSIONID} onClick={() => goToSession(session.SESSIONID)} checked={sessionID === session.SESSIONID} />
                                 <label htmlFor={session.SESSIONID} className="label-item">
@@ -241,19 +230,59 @@ const Entrainements: FunctionComponent = () => {
             {session.map(session => (
                 <div className="session-detail" key={session.SESSIONID}>
                     <h3 className="title-session-detail">{session.SPORT}</h3>
-                    <div className="session-detail-item">
-                        <p>STARTTIME: {session.STARTTIME}</p>
-                        <p>STOPTIME: {session.STOPTIME}</p>
-                        <p>DURATION_CALCULATED: {session.DURATION_CALCULATED}</p>
-                        <p>DURATION2: {session.DURATION2}</p>
-                        <p>DISTANCE: {session.DISTANCE}</p>
-                        <p>MAXIMUMHEARTRATE: {session.MAXIMUMHEARTRATE}</p>
-                        <p>AVERAGEHEARTRATE: {session.AVERAGEHEARTRATE}</p>
-                        <p>KILOCALORIES: {session.KILOCALORIES}</p>
-                        <p>AVGSPEED: {session.AVGSPEED }</p>
-                        <p>MAXSPEED: {session.MAXSPEED}</p>
-                        <p>AVGCADENCE: {session.AVGCADENCE}</p>
-                        <p>MAXCADENCE: {session.MAXCADENCE}</p>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-6">
+                                <small>Début de la session:</small><br/><strong>{session.STARTTIME}</strong>
+                            </div>
+                            <div className="col-6">
+                                <small>Repos depuis la dernière scéance:</small><br/><strong>...</strong>
+                            </div>
+                            <div className="w-100"></div>
+                            <div className="col-6">
+                                <small>Fin de la session:</small><br/><strong>{session.STOPTIME}</strong>
+                            </div>
+                            <div className="col-6">
+                                <small>Nombre de segments dans la séance:</small><br/><strong>...</strong>
+                            </div>
+                            <div className="w-100"></div>
+                            <div className="col-6">
+                                <small>Durée calculée:</small><br/><strong>{session.DURATION_CALCULATED}</strong>
+                            </div>
+                            <div className="col-6">
+                                <small>Vitesse moyenne pour les séances de même type:</small><br/><strong>...</strong>
+                            </div>
+                            <div className="col-8">
+                                <small>Durée 2:</small><br/><strong>{session.DURATION2}</strong>
+                            </div>
+                            <div className="col-8">
+                                <small>Distance:</small><br/><strong>{session.DISTANCE}</strong>
+                            </div>
+                            <div className="col-8">
+                                <small>Fréquence cardiaque Max:</small><br/><strong>{session.MAXIMUMHEARTRATE}</strong>
+                            </div>
+                            <div className="col-8">
+                                <small>Fréquence cardiaque Moyenne:</small><br/><strong>{session.AVERAGEHEARTRATE}</strong>
+                            </div>
+                            <div className="col-8">
+                                <small>Fréquence cardiaque Moyenne:</small><br/><strong>{session.AVERAGEHEARTRATE}</strong>
+                            </div>
+                            <div className="col-8">
+                                <small>Kilocalories:</small><br/><strong>{session.KILOCALORIES}</strong>
+                            </div>
+                            <div className="col-8">
+                                <small>Vitesse Max:</small><br/><strong>{session.MAXSPEED}</strong>
+                            </div>
+                            <div className="col-8">
+                                <small>Vitesse Moyenne:</small><br/><strong>{session.AVGSPEED}</strong>
+                            </div>
+                            <div className="col-8">
+                                <small>Cadence Max:</small><br/><strong>{session.MAXCADENCE}</strong>
+                            </div>
+                            <div className="col-8">
+                                <small>Cadence Moyenne:</small><br/><strong>{session.AVGCADENCE}</strong>
+                            </div>
+                        </div>
                     </div>
                 </div>
             ))}
@@ -263,28 +292,64 @@ const Entrainements: FunctionComponent = () => {
             
             <div className="formEnriched">
                 <h3 className="title-form-enriched">Données complémentaires</h3>
-                <form action="">
-                    <label htmlFor="">Ressenti de la session: </label>
-                    <select name="" id="">
-                        <option value="">-- Choisis ton état physique --</option>
-                        <option value="TresFatiguer">Très Fatigué</option>
-                        <option value="Fatiguer">Fatigué</option>
-                        <option value="EnForme">En forme</option>
-                        <option value="Super">Super</option>
-                    </select>
-                    <label htmlFor="">Type d'équipement</label>
-                    <select name="" id="">
-                        <option value="">-- Choisis ton équipement --</option>
-                        <option value="ChaussureNormal">Chaussures normales</option>
-                        <option value="ChausureSpécial">Chaussures spéciales</option>
-                    </select>
+                <form>
                     <div>
-                        <input type="checkbox" id="verified" />
-                        <label htmlFor="verified">Session vérifiée</label>
+                        <label>Type:</label>
+                        <div className="w-100"></div>
+                        <select className="form-select form-select-sm">
+                            <option value="">Fractionné</option>
+                        </select>
                     </div>
-                    <label htmlFor="">Poids: </label>
-                    <input type="number" value="70" />
-                    <input type="submit" value={"Sauvegarder"} />
+                    <div>
+                        <label>Lieu: </label>
+                        <div className="w-100"></div>
+                        <select className="form-select form-select-sm">
+                            <option value="Exterieur-stade">Extérieur - Stade</option>
+                            <option value="Interieur-stade">Interieur - Stade</option>
+                        </select>
+                    </div>
+                    <div className="input-group mb-3">
+                        <label>Poids:</label>
+                        <div className="w-100"></div>
+                        <input type="number" className="form-control" value="70" />
+                        <span className="input-group-text">kg</span>
+                    </div>
+                    <div>
+                        <label htmlFor="">Type d'équipement</label>
+                        <div className="w-100"></div>
+                        <select className="form-select form-select-sm">
+                            <option value="">-- Choisis ton équipement --</option>
+                            <option value="ChaussureNormal">Chaussures normales</option>
+                            <option value="ChausureSpécial">Chaussures spéciales</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Etat avant la séance:</label>
+                        <div className="w-100"></div>
+                        <select className="form-select form-select-sm">
+                            <option value="">-- Choisis ton état physique --</option>
+                            <option value="Fatiguer">Fatigué</option>
+                            <option value="EnForme">En forme</option>
+                            <option value="Super">Super</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Ressenti de la séance:</label>
+                        <div className="w-100"></div>
+                        <select className="form-select form-select-sm">
+                            <option value="">-- Choisis ton ressenti --</option>
+                            <option value="Fatiguer">Fatigué</option>
+                            <option value="EnForme">En forme</option>
+                            <option value="Super">Super</option>
+                        </select>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" value="" id="verified" />
+                        <label className="form-check-label" htmlFor="verified">
+                        Session vérifiée
+                        </label>
+                    </div>
+                    <input type="button" className="btn btn-success" value={"Sauvegarder"} />
                 </form>
             </div>
         </div>
