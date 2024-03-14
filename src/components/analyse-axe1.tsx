@@ -13,8 +13,12 @@ const AnalyseAxe1: FunctionComponent = () => {
             let gridItemClicked = (e.target as Element).closest(".grid-item");
             if (gridItemClicked) {
                 let clickedImageName = gridItemClicked.id;
-                popupBg.classList.add("active");
-                popupImg.src = `https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getgraph?graph=${clickedImageName}`;
+                if(clickedImageName === "segment" || clickedImageName === "timeinzone") {
+                    popupBg.classList.add("active");
+                    popupImg.src = `https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getgraph?graph=${clickedImageName}`;
+                } else {
+                    window.open(`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/graph?name=${clickedImageName}`);
+                }
             }}
         };
 
@@ -34,7 +38,7 @@ const AnalyseAxe1: FunctionComponent = () => {
     return(
         <div id="Analyse" className="AnalyseAxe1">
             <div className="analyse-graph">
-                <h1>Graph segment / sequence</h1>
+                <h1 className="title-smart-analysis">Smart analysis</h1>
                 <div id="popup-bg">
                     <div id="popup-content">
                         <div id="popup-close">
@@ -52,13 +56,17 @@ const AnalyseAxe1: FunctionComponent = () => {
                         <img src="../images/timeInZoneIcon.png" alt="graph_time_in_zone" className="grid-img" />
                         <p>Sequence</p>
                     </div>
-                    <div className="grid-item" id="name=dist_per_session"> {/* à corriger */}
+                    <div className="grid-item" id="dist_per_session">
                         <img src="../images/dist_per_session.png" alt="dist_per_session" className="grid-img" />
                         <p>Distance par session</p>
                     </div>
-                    <div className="grid-item" id="name=chart_ratio_speed_heartrate_in_sequences">
+                    <div className="grid-item" id="chart_ratio_speed_heartrate_in_sequences">
                         <img src="../images/speed_vs_heartrate.png" alt="chart_ratio_speed_heartrate_in_sequences" className="grid-img" />
                         <p>Speed Vs HeartRate</p>
+                    </div>
+                    <div className="grid-item" id="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90">
+                        <img src="../images/timeinzone_aggregation.png" alt="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90" className="grid-img" />
+                        <p>Graph 3 dernier mois</p>
                     </div>
                 </div>
             </div>

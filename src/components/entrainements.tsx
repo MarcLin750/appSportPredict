@@ -150,17 +150,6 @@ const Entrainements: FunctionComponent = () => {
                 // console.log(id)
             });
     }
-
-    const postFormSession = () => {
-        const options = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({title: 'info post request'})
-        };
-        fetch('', options)
-            .then(response => response.json())
-            // .then(data => setPostId(data.id))
-    }
     
     const formatDate = (date: string):string =>{
         const [datePart, timePart] = date.split('T');
@@ -171,17 +160,70 @@ const Entrainements: FunctionComponent = () => {
         return `${hour}:${minute} | ${day}.${month}.${year}`;
     }
 
-    const formatDuration = (duration: number): string => {
-
-        const [partOne] = duration.toString().split('.');
-
-        return `Durée: ${partOne}.`;
+    function formatDateStartSession(dateString: string): string {
+        const months = [
+            "janvier", "février", "mars", "avril", "mai", "juin",
+            "juillet", "août", "septembre", "octobre", "novembre", "décembre"
+        ];
+    
+        const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+    
+        const date = new Date(dateString);
+        const day = days[date.getDay()];
+        const month = months[date.getMonth()];
+        const year = date.getFullYear();
+        const hours = date.getHours() - 1;
+        const minutes = date.getMinutes();
+    
+        const formattedDate = `${hours}h${minutes} | ${day}, ${date.getDate()} ${month} ${year}. `;
+        return formattedDate;
     }
 
-    const formatDistance = (distance: number): string => {
-        const distanceTrue = distance ? distance : 0;
-        const [partOne] = distanceTrue.toString().split('.');
-        return `(${partOne} m)`
+    function formatSeconds(seconds: number): string {
+        seconds = Math.round(seconds)
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const remainingSeconds = seconds % 60;
+    
+        const formattedHours = String(hours).padStart(2, '0');
+        const formattedMinutes = String(minutes).padStart(2, '0');
+        const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+    
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    function formatMeters(meters: number): string {
+        const kilometers = meters / 1000;
+        if (kilometers > 0) {
+            return `${kilometers.toFixed(3)} km`
+        } else {
+            return 'N/A';
+        }
+    }
+
+    function formatBpm(bpm: number): string {
+        const heartrate = bpm ;
+        if (heartrate !== null) {
+            return `${heartrate} bpm`
+        } else {
+            return 'N/A'
+        }
+    }
+
+    function formatKmh(speed: number | null): string {
+        if (speed !== null) {
+            return `${speed.toFixed(2)} km/h`;
+        } else {
+            return "N/A";
+        }
+    }
+    
+    function formatPpm(ppm: number | null): string {
+        if (ppm !== null) {
+            return `${ppm} ppm`;
+        } else {
+            return "N/A";
+        }
     }
 
     const sportNameFiltre = (event: string) => {
@@ -216,7 +258,7 @@ const Entrainements: FunctionComponent = () => {
                             <input type="radio" name="btn-session" id={session.SESSIONID} onClick={() => goToSession(session.SESSIONID)} checked={sessionID === session.SESSIONID} />
                                 <label htmlFor={session.SESSIONID} className="label-item">
                                         <strong> {session.SPORT} </strong>
-                                        <small>{formatDistance(session.DISTANCE)}</small>
+                                        <small>({formatMeters(session.DISTANCE)})</small>
                                         <small> {formatDate(session.SESSIONID)} </small>
                                 </label>
                         </li>
@@ -227,65 +269,120 @@ const Entrainements: FunctionComponent = () => {
             {/* <SessionDetail /> */}
 
             <div className="TabSessionDetail">
-            {session.map(session => (
+            {session.length > 0 ? (session.map(session => (
                 <div className="session-detail" key={session.SESSIONID}>
                     <h3 className="title-session-detail">{session.SPORT}</h3>
                     <div className="container">
                         <div className="row">
                             <div className="col-6">
-                                <small>Début de la session:</small><br/><strong>{session.STARTTIME}</strong>
+                                <small>Début de la session:</small><br/><strong>{formatDateStartSession(session.STARTTIME)}</strong>
                             </div>
-                            <div className="col-6">
+                            {/* <div className="col-6">
                                 <small>Repos depuis la dernière scéance:</small><br/><strong>...</strong>
-                            </div>
-                            <div className="w-100"></div>
+                            </div> */}
                             <div className="col-6">
-                                <small>Fin de la session:</small><br/><strong>{session.STOPTIME}</strong>
+                                <small>Fin de la session:</small><br/><strong>{formatDateStartSession(session.STOPTIME)}</strong>
                             </div>
-                            <div className="col-6">
+                            {/* <div className="col-6">
                                 <small>Nombre de segments dans la séance:</small><br/><strong>...</strong>
-                            </div>
-                            <div className="w-100"></div>
+                            </div> */}
                             <div className="col-6">
-                                <small>Durée calculée:</small><br/><strong>{session.DURATION_CALCULATED}</strong>
+                                <small>Durée de la session (HH:MM:SS):</small><br/><strong>{formatSeconds(session.DURATION_CALCULATED)}</strong>
                             </div>
-                            <div className="col-6">
+                            {/* <div className="col-6">
                                 <small>Vitesse moyenne pour les séances de même type:</small><br/><strong>...</strong>
+                            </div> */}
+                            <div className="col-6">
+                                <small>Durée de l'effort:</small><br/><strong>{formatSeconds(session.DURATION2)}</strong>
                             </div>
-                            <div className="col-8">
-                                <small>Durée 2:</small><br/><strong>{session.DURATION2}</strong>
+                            <div className="col-6">
+                                <small>Distance:</small><br/><strong>{formatMeters(session.DISTANCE)}</strong>
                             </div>
-                            <div className="col-8">
-                                <small>Distance:</small><br/><strong>{session.DISTANCE}</strong>
+                            <div className="col-6">
+                                <small>Fréquence cardiaque Max:</small><br/><strong>{formatBpm(session.MAXIMUMHEARTRATE)}</strong>
                             </div>
-                            <div className="col-8">
-                                <small>Fréquence cardiaque Max:</small><br/><strong>{session.MAXIMUMHEARTRATE}</strong>
+                            <div className="col-6">
+                                <small>Fréquence cardiaque Moyenne:</small><br/><strong>{formatBpm(session.AVERAGEHEARTRATE)}</strong>
                             </div>
-                            <div className="col-8">
-                                <small>Fréquence cardiaque Moyenne:</small><br/><strong>{session.AVERAGEHEARTRATE}</strong>
+                            <div className="col-6">
+                                <small>Fréquence cardiaque Moyenne:</small><br/><strong>{formatBpm(session.AVERAGEHEARTRATE)}</strong>
                             </div>
-                            <div className="col-8">
-                                <small>Fréquence cardiaque Moyenne:</small><br/><strong>{session.AVERAGEHEARTRATE}</strong>
+                            <div className="col-6">
+                                <small>Kilocalories:</small><br/><strong>{session.KILOCALORIES} kcal</strong>
                             </div>
-                            <div className="col-8">
-                                <small>Kilocalories:</small><br/><strong>{session.KILOCALORIES}</strong>
+                            <div className="col-6">
+                                <small>Vitesse Max:</small><br/><strong>{formatKmh(session.MAXSPEED)}</strong>
                             </div>
-                            <div className="col-8">
-                                <small>Vitesse Max:</small><br/><strong>{session.MAXSPEED}</strong>
+                            <div className="col-6">
+                                <small>Vitesse Moyenne:</small><br/><strong>{formatKmh(session.AVGSPEED)}</strong>
                             </div>
-                            <div className="col-8">
-                                <small>Vitesse Moyenne:</small><br/><strong>{session.AVGSPEED}</strong>
+                            <div className="col-6">
+                                <small>Cadence Max:</small><br/><strong>{formatPpm(session.MAXCADENCE)}</strong>
                             </div>
-                            <div className="col-8">
-                                <small>Cadence Max:</small><br/><strong>{session.MAXCADENCE}</strong>
-                            </div>
-                            <div className="col-8">
-                                <small>Cadence Moyenne:</small><br/><strong>{session.AVGCADENCE}</strong>
+                            <div className="col-6">
+                                <small>Cadence Moyenne:</small><br/><strong>{formatPpm(session.AVGCADENCE)}</strong>
                             </div>
                         </div>
                     </div>
                 </div>
-            ))}
+            ))
+            ) : (
+                <div className="session-detail">
+                    <h3 className="title-session-detail">Chargement</h3>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-6">
+                                <small>Début de la session:</small><br/><div className="col-10 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            {/* <div className="col-6">
+                                <small>Repos depuis la dernière scéance:</small><br/><strong>...</strong>
+                            </div> */}
+                            <div className="col-6">
+                                <small>Fin de la session:</small><br/><div className="col-10 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            {/* <div className="col-6">
+                                <small>Nombre de segments dans la séance:</small><br/><strong>...</strong>
+                            </div> */}
+                            <div className="col-6">
+                                <small>Durée de la session (HH:MM:SS):</small><br/><div className="col-3 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            {/* <div className="col-6">
+                                <small>Vitesse moyenne pour les séances de même type:</small><br/><strong>...</strong>
+                            </div> */}
+                            <div className="col-6">
+                                <small>Durée de l'effort:</small><br/><div className="col-3 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            <div className="col-6">
+                                <small>Distance:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            <div className="col-6">
+                                <small>Fréquence cardiaque Max:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            <div className="col-6">
+                                <small>Fréquence cardiaque Moyenne:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            <div className="col-6">
+                                <small>Fréquence cardiaque Moyenne:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            <div className="col-6">
+                                <small>Kilocalories:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            <div className="col-6">
+                                <small>Vitesse Max:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            <div className="col-6">
+                                <small>Vitesse Moyenne:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            <div className="col-6">
+                                <small>Cadence Max:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            </div>
+                            <div className="col-6">
+                                <small>Cadence Moyenne:</small><br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
             </div>
 
             {/* <EtatPhysique /> */}
@@ -315,12 +412,12 @@ const Entrainements: FunctionComponent = () => {
                         <span className="input-group-text">kg</span>
                     </div>
                     <div>
-                        <label htmlFor="">Type d'équipement</label>
+                        <label htmlFor="">Type de semelle:</label>
                         <div className="w-100"></div>
                         <select className="form-select form-select-sm">
-                            <option value="">-- Choisis ton équipement --</option>
-                            <option value="ChaussureNormal">Chaussures normales</option>
-                            <option value="ChausureSpécial">Chaussures spéciales</option>
+                            <option value="">-- Choisis le type --</option>
+                            <option value="ChaussureCarbone">Semelle carbone</option>
+                            <option value="ChausureLiège">Semelle liège</option>
                         </select>
                     </div>
                     <div>
@@ -341,6 +438,14 @@ const Entrainements: FunctionComponent = () => {
                             <option value="Fatiguer">Fatigué</option>
                             <option value="EnForme">En forme</option>
                             <option value="Super">Super</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Mesure des lactates:</label>
+                        <select className="form-select form-select-sm">
+                            <option value="">
+                                Taux de lactates
+                            </option>
                         </select>
                     </div>
                     <div className="form-check">

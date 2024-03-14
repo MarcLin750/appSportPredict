@@ -17,9 +17,6 @@ const NavBar: FunctionComponent = () => {
                     <li className="nav-item">
                       <a className="nav-link" href="/connexion-polar">Polar API</a>
                     </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/toto">Toto</a>
-                    </li>
                   </ul>
                 </div>
             </div>
