@@ -253,7 +253,7 @@ const Entrainements: FunctionComponent = () => {
                     </div>
                 </form>
                 <ul className="SessionList_Ul">
-                    {listOfSessionsFilterSport.map(session => (
+                    {listOfSessionsFilterSport.length > 0 ? (listOfSessionsFilterSport.map(session => (
                         <li key={session.SESSIONID}>
                             <input type="radio" name="btn-session" id={session.SESSIONID} onClick={() => goToSession(session.SESSIONID)} checked={sessionID === session.SESSIONID} />
                                 <label htmlFor={session.SESSIONID} className="label-item">
@@ -262,7 +262,24 @@ const Entrainements: FunctionComponent = () => {
                                         <small> {formatDate(session.SESSIONID)} </small>
                                 </label>
                         </li>
-                    ))}
+                    ))
+                    ) : (
+                        Array.from({ length: 20 }).map((_, index) => (
+                            <li key={index}>
+                              <input
+                                type="radio"
+                                name="btn-session"
+                                id={`placeholder-session-list-${index}`}
+                                checked={index === 0} // Le premier élément est le seul qui sera coché
+                              />
+                              <label htmlFor={`placeholder-session-list-${index}`} className="label-item placeholder-glow">
+                                <strong className="placeholder placeholder-glow border rounded-2 p-2.8 col-3"></strong>
+                                <small className="placeholder placeholder-glow border rounded-2 p-2.6 col-2"></small>
+                                <small className="placeholder placeholder-glow border rounded-2 p-2.6 col-5"></small>
+                              </label>
+                            </li>
+                        ))
+                    )}
                 </ul>
             </div>
 
@@ -328,56 +345,56 @@ const Entrainements: FunctionComponent = () => {
             ))
             ) : (
                 <div className="session-detail">
-                    <h3 className="title-session-detail">Chargement</h3>
+                    <h3 className="title-session-detail">Chargement de la session...</h3>
                     <div className="container">
                         <div className="row">
-                            <div className="col-6">
-                                <small>Début de la session:</small><br/><div className="col-10 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Début de la session:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-9"></div>
                             </div>
-                            {/* <div className="col-6">
+                            {/* <div className="col-6 placeholder-glow">
                                 <small>Repos depuis la dernière scéance:</small><br/><strong>...</strong>
                             </div> */}
-                            <div className="col-6">
-                                <small>Fin de la session:</small><br/><div className="col-10 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Fin de la session:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-9"></div>
                             </div>
-                            {/* <div className="col-6">
+                            {/* <div className="col-6 placeholder-glow">
                                 <small>Nombre de segments dans la séance:</small><br/><strong>...</strong>
                             </div> */}
-                            <div className="col-6">
-                                <small>Durée de la session (HH:MM:SS):</small><br/><div className="col-3 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Durée de la session (HH:MM:SS):</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-3"></div>
                             </div>
-                            {/* <div className="col-6">
+                            {/* <div className="col-6 placeholder-glow">
                                 <small>Vitesse moyenne pour les séances de même type:</small><br/><strong>...</strong>
                             </div> */}
-                            <div className="col-6">
-                                <small>Durée de l'effort:</small><br/><div className="col-3 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Durée de l'effort:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-3"></div>
                             </div>
-                            <div className="col-6">
-                                <small>Distance:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Distance:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
-                            <div className="col-6">
-                                <small>Fréquence cardiaque Max:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Fréquence cardiaque Max:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
-                            <div className="col-6">
-                                <small>Fréquence cardiaque Moyenne:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Fréquence cardiaque Moyenne:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
-                            <div className="col-6">
-                                <small>Fréquence cardiaque Moyenne:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Fréquence cardiaque Moyenne:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
-                            <div className="col-6">
-                                <small>Kilocalories:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Kilocalories:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
-                            <div className="col-6">
-                                <small>Vitesse Max:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Vitesse Max:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
-                            <div className="col-6">
-                                <small>Vitesse Moyenne:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Vitesse Moyenne:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
-                            <div className="col-6">
-                                <small>Cadence Max:</small><br/><div className="col-2 placeholder placeholder-glow border rounded-3 p-2 bg-secondary"></div>
+                            <div className="col-6 placeholder-glow">
+                                <small>Cadence Max:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
-                            <div className="col-6">
-                                <small>Cadence Moyenne:</small><br/>
+                            <div className="col-6 placeholder-glow">
+                                <small>Cadence Moyenne:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
                         </div>
                     </div>

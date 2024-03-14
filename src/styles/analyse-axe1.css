@@ -3,6 +3,11 @@
     border-bottom: black solid 1px;
 }
 
+.smart-analysis{
+    display: flex;
+    margin: 20px;
+}
+
 .analyse-graph{
     height: 78vh;
     border-radius: 20px;
@@ -11,7 +16,10 @@
 }
 
 .grid{
-    display: flex;
+    height: 62vh;
+    width: 16vw;
+    overflow-y: scroll;
+    display: column;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
@@ -19,6 +27,7 @@
 .grid-item{
     margin: 20px;
     padding: 12px;
+    height: 120px;
     border: #121338 solid 2px;
     border-radius: 20px;
     display: flex;
@@ -34,8 +43,8 @@
 }
 
 .grid-img{
-    width: 20vw;
-    height: 20vh;
+    width: 5vw;
+    height: 5vh;
     object-fit: cover;
     display: block;
     transition: transform 0.2s ease;
@@ -103,4 +112,9 @@
 .close-circle{
     width: 30px;
     cursor: pointer;
+}
+
+.ifram-graph {
+    margin-left: 2vw;
+    width: 80vw;
 }

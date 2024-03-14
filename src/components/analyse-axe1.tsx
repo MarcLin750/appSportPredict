@@ -1,7 +1,14 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import '../styles/analyse-axe1.css'
 
 const AnalyseAxe1: FunctionComponent = () => {
+
+    const [loading, setLoading] = useState(true);
+
+    const handleLoad = () => {
+        // Une fois que l'iframe est chargé, nous mettons loading à false
+        setLoading(false);
+    };
 
     useEffect(() => {
         let allGridItems = Array.from(document.getElementsByClassName("grid-item"));
@@ -47,26 +54,44 @@ const AnalyseAxe1: FunctionComponent = () => {
                         <img id="popup-img" src="#" />
                     </div>
                 </div>
-                <div className="grid">
-                    <div className="grid-item" id="segment">
-                        <img src="../images/segmentIcon.png" alt="graph_segment" className="grid-img" />
-                        <p>Segment</p>
+                <div className="smart-analysis">
+                    <div className="grid">
+                        <div className="grid-item" id="segment">
+                            <img src="../images/segmentIcon.png" alt="graph_segment" className="grid-img" />
+                            <p>Segment</p>
+                        </div>
+                        <div className="grid-item" id="timeinzone">
+                            <img src="../images/timeInZoneIcon.png" alt="graph_time_in_zone" className="grid-img" />
+                            <p>Sequence</p>
+                        </div>
+                        <div className="grid-item" id="dist_per_session">
+                            <img src="../images/dist_per_session.png" alt="dist_per_session" className="grid-img" />
+                            <p>Distance par session</p>
+                        </div>
+                        <div className="grid-item" id="chart_ratio_speed_heartrate_in_sequences">
+                            <img src="../images/speed_vs_heartrate.png" alt="chart_ratio_speed_heartrate_in_sequences" className="grid-img" />
+                            <p>Speed Vs HeartRate</p>
+                        </div>
+                        <div className="grid-item" id="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90">
+                            <img src="../images/timeinzone_aggregation.png" alt="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90" className="grid-img" />
+                            <p>Graph 3 dernier mois</p>
+                        </div>
                     </div>
-                    <div className="grid-item" id="timeinzone">
-                        <img src="../images/timeInZoneIcon.png" alt="graph_time_in_zone" className="grid-img" />
-                        <p>Sequence</p>
-                    </div>
-                    <div className="grid-item" id="dist_per_session">
-                        <img src="../images/dist_per_session.png" alt="dist_per_session" className="grid-img" />
-                        <p>Distance par session</p>
-                    </div>
-                    <div className="grid-item" id="chart_ratio_speed_heartrate_in_sequences">
-                        <img src="../images/speed_vs_heartrate.png" alt="chart_ratio_speed_heartrate_in_sequences" className="grid-img" />
-                        <p>Speed Vs HeartRate</p>
-                    </div>
-                    <div className="grid-item" id="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90">
-                        <img src="../images/timeinzone_aggregation.png" alt="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90" className="grid-img" />
-                        <p>Graph 3 dernier mois</p>
+                    <div className="ifram-graph">
+                        <div className="position-relative w-100 h-100">
+                            {loading && (
+                                <div className="placeholder-glow">
+                                    {/* <div className="placeholder border rounded-2 w-100"  style={{height: '40vh', marginTop: '10vh'}}></div> */}
+                                    <img width="58%" style={{ marginLeft: '14vw', marginTop: '2vh'}} src="../images/imageAnalyseSportive.jpg" />
+                                </div>
+                            )}
+                            <iframe
+                                width="100%"
+                                height="100%"
+                                src="https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/graph?name=dist_per_session"
+                                onLoad={handleLoad}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
