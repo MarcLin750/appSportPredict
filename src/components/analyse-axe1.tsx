@@ -4,6 +4,8 @@ import '../styles/analyse-axe1.css'
 const AnalyseAxe1: FunctionComponent = () => {
 
     const [loading, setLoading] = useState(true);
+    const [graphName, setGraphName] = useState('');
+    const [showIframe, setShowIframe] = useState(false);
 
     const handleLoad = () => {
         // Une fois que l'iframe est chargé, nous mettons loading à false
@@ -24,7 +26,9 @@ const AnalyseAxe1: FunctionComponent = () => {
                     popupBg.classList.add("active");
                     popupImg.src = `https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getgraph?graph=${clickedImageName}`;
                 } else {
-                    window.open(`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/graph?name=${clickedImageName}`);
+                    setGraphName(clickedImageName);
+                    setShowIframe(true);
+                    // window.open(`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/graph?name=${clickedImageName}`);
                 }
             }}
         };
@@ -40,7 +44,7 @@ const AnalyseAxe1: FunctionComponent = () => {
         return () => {
             allGridItems.forEach(el => el.removeEventListener("click", openPopup));
         };
-    }, []);
+    }, [graphName]);
     
     return(
         <div id="Analyse" className="AnalyseAxe1">
@@ -49,9 +53,9 @@ const AnalyseAxe1: FunctionComponent = () => {
                 <div id="popup-bg">
                     <div id="popup-content">
                         <div id="popup-close">
-                            <img src="../images/croix.png" className="close-circle" />
+                            <img src="../images/croix.png" className="close-circle" alt="croix"/>
                         </div>
-                        <img id="popup-img" src="#" />
+                        <img id="popup-img" src="#" alt="#"/>
                     </div>
                 </div>
                 <div className="smart-analysis">
@@ -70,27 +74,37 @@ const AnalyseAxe1: FunctionComponent = () => {
                         </div>
                         <div className="grid-item" id="chart_ratio_speed_heartrate_in_sequences">
                             <img src="../images/speed_vs_heartrate.png" alt="chart_ratio_speed_heartrate_in_sequences" className="grid-img" />
-                            <p>Speed Vs HeartRate</p>
+                            <p>Vitesse / bpm</p>
                         </div>
                         <div className="grid-item" id="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90">
                             <img src="../images/timeinzone_aggregation.png" alt="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90" className="grid-img" />
-                            <p>Graph 3 dernier mois</p>
+                            <p>Temps passé dans les zones</p>
+                        </div>
+                        <div className="grid-item" id="rest_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3">
+                            <img src="../images/influenceduring2session.png" alt="rest_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3" className="grid-img" />
+                            <p>Influence de la duration entre 2 sessions</p>
+                        </div>
+                        <div className="grid-item" id="previous_number_of_session_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3">
+                            <img src="../images/influence3lastday.png" alt="previous_number_of_session_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3" className="grid-img" />
+                            <p>Influence des sessions durant les 3 derniers jours</p>
                         </div>
                     </div>
                     <div className="ifram-graph">
-                        <div className="position-relative w-100 h-100">
-                            {loading && (
+                    <div className="position-relative w-100 h-100">
+                            {loading && !showIframe && (
                                 <div className="placeholder-glow">
-                                    {/* <div className="placeholder border rounded-2 w-100"  style={{height: '40vh', marginTop: '10vh'}}></div> */}
-                                    <img width="58%" style={{ marginLeft: '14vw', marginTop: '2vh'}} src="../images/imageAnalyseSportive.jpg" />
+                                    <img width="58%" style={{ marginLeft: '14vw', marginTop: '2vh'}} src="../images/imageAnalyseSportive.jpg" alt="runninganalys"/>
                                 </div>
                             )}
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                src="https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/graph?name=dist_per_session"
-                                onLoad={handleLoad}
-                            />
+                            {showIframe && (
+                                <iframe
+                                    title="graph"
+                                    width="100%"
+                                    height="100%"
+                                    src={`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/graph?name=${graphName}`}
+                                    onLoad={handleLoad}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

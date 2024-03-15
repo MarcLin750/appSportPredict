@@ -407,71 +407,149 @@ const Entrainements: FunctionComponent = () => {
             <div className="formEnriched">
                 <h3 className="title-form-enriched">Données complémentaires</h3>
                 <form>
-                    <div>
-                        <label>Type:</label>
-                        <div className="w-100"></div>
-                        <select className="form-select form-select-sm">
-                            <option value="">Fractionné</option>
-                        </select>
+                    <div className="row mb-3">
+                        <div className="col">
+                            <div className="input-group">
+                                <div className="input-group-text">
+                                    <input className="form-check-input" type="checkbox" id="verified" />
+                                </div>
+                                <span className="input-group-text">Session vérifiée</span>
+                            </div>
+                        </div>
+                        <div className="col-6">
+                            <div className="input-group">
+                                <span className="input-group-text">Poids :</span>
+                                <input type="number" className="form-control" value="70.00" />
+                                <span className="input-group-text">kg</span>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label>Lieu: </label>
-                        <div className="w-100"></div>
+                    <div className="input-group mb-3">
+                        <div className="input-group-text">
+                            <label>Type entrainement :</label>
+                        </div>
                         <select className="form-select form-select-sm">
-                            <option value="Exterieur-stade">Extérieur - Stade</option>
-                            <option value="Interieur-stade">Interieur - Stade</option>
+                            <option value="Fractionne">Fractionné</option>
+                            <option value="VMA">VMA</option>
+                            <option value="Seuil">Seuil</option>
+                            <option value="Footing">Footing</option>
+                            <option value="Autre">Autre</option>
                         </select>
                     </div>
                     <div className="input-group mb-3">
-                        <label>Poids:</label>
-                        <div className="w-100"></div>
-                        <input type="number" className="form-control" value="70" />
-                        <span className="input-group-text">kg</span>
-                    </div>
-                    <div>
-                        <label htmlFor="">Type de semelle:</label>
-                        <div className="w-100"></div>
+                        <div className="input-group-text">
+                            <label>Lieu d'entrainement :</label>
+                        </div>
                         <select className="form-select form-select-sm">
-                            <option value="">-- Choisis le type --</option>
-                            <option value="ChaussureCarbone">Semelle carbone</option>
-                            <option value="ChausureLiège">Semelle liège</option>
+                            <option value="Interieur">Intérieur</option>
+                            <option value="Exterieur">Extérieur</option>
+                            <option value="Nature">Nature</option>
+                            <option value="Route">Route</option>
+                            <option value="Autre">Autre</option>
                         </select>
                     </div>
-                    <div>
-                        <label>Etat avant la séance:</label>
-                        <div className="w-100"></div>
-                        <select className="form-select form-select-sm">
-                            <option value="">-- Choisis ton état physique --</option>
-                            <option value="Fatiguer">Fatigué</option>
-                            <option value="EnForme">En forme</option>
-                            <option value="Super">Super</option>
-                        </select>
+                    <div className="card mb-3">
+                        <span className="input-group-text">Matériel :</span>
+                        <div className="input-group p-2">
+                            <div className="input-group-text">
+                                <label>Type de chaussure :</label>
+                            </div>
+                            <select className="form-select form-select-sm">
+                                <option value="True">Chaussure course (semelle carbone)</option>
+                                <option value="False">Chaussure entrainement</option>
+                            </select>
+                        </div>
+                        <div className="input-group p-2">
+                            <div className="input-group-text">
+                                <label htmlFor="">Prothèse:</label>
+                            </div>
+                            <select className="form-select form-select-sm">
+                                <option value="True">Avec prothèse</option>
+                                <option value="False">Sans prothèse</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="card mb-3">
+                        <span className="input-group-text">Mesures physiques :</span>
+                        <div className="row">
+                            <div className="col-4">
+                                <div className="input-group p-2">
+                                    <label className="input-group-text">Tour n° :</label>
+                                    <input type="number" className="form-control" value="0"/>
+                                </div>
+                            </div>
+                            <div className="col-6">
+                                <div className="input-group p-2">
+                                    <label className="input-group-text">Taux mesuré :</label>
+                                    <input type="number" className="form-control" value="1.50"/>
+                                    <span className="input-group-text">mmol/L</span>
+                                </div>
+                            </div>
+                            <div className="col p-2">
+                                <button className="btn btn-primary">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card mb-3">
+                        <span className="input-group-text">Etat physique/psychologique :</span>
+                        <div className="row">
+                            <div className="col-7">
+                                <div className="input-group p-2">
+                                    <div className="input-group-text">
+                                        <label>Percéption de la séance (RPE) :</label>
+                                    </div>
+                                    <select className="form-select form-select-sm">
+                                        <option value="">Echelle Borg</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col">
+                                <div className="input-group p-2"><div className="input-group-text">
+                                        <label>Forme du jour :</label>
+                                    </div>
+                                    <select className="form-select form-select-sm">
+                                        <option value="2">Pic de forme</option>
+                                        <option value="1">Forme Normale</option>
+                                        <option value="0">Fatigué</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-5">
+                                <div className="input-group p-2">
+                                    <div className="input-group-text">
+                                        <label>Durée sommeil :</label>
+                                    </div>
+                                    <input type="time" className="input-group-text" value="08:00"/>
+                                </div>
+                            </div>
+                            <div className="col">
+                                <div className="input-group p-2"><div className="input-group-text">
+                                        <label>Qualité de sommeil :</label>
+                                    </div>
+                                    <select className="form-select form-select-sm">
+                                        <option value="2">Bon</option>
+                                        <option value="1">Moyen</option>
+                                        <option value="0">Mauvais</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div>
-                        <label>Ressenti de la séance:</label>
-                        <div className="w-100"></div>
-                        <select className="form-select form-select-sm">
-                            <option value="">-- Choisis ton ressenti --</option>
-                            <option value="Fatiguer">Fatigué</option>
-                            <option value="EnForme">En forme</option>
-                            <option value="Super">Super</option>
-                        </select>
+                        <input type="button" className="btn btn-success" value={"Sauvegarder"} />
                     </div>
-                    <div>
-                        <label>Mesure des lactates:</label>
-                        <select className="form-select form-select-sm">
-                            <option value="">
-                                Taux de lactates
-                            </option>
-                        </select>
-                    </div>
-                    <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="verified" />
-                        <label className="form-check-label" htmlFor="verified">
-                        Session vérifiée
-                        </label>
-                    </div>
-                    <input type="button" className="btn btn-success" value={"Sauvegarder"} />
                 </form>
             </div>
         </div>
