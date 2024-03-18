@@ -220,7 +220,7 @@ const Entrainements: FunctionComponent = () => {
     
     function formatPpm(ppm: number | null): string {
         if (ppm !== null) {
-            return `${ppm} ppm`;
+            return `${ppm}`;
         } else {
             return "N/A";
         }

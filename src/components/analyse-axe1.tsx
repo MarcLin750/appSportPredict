@@ -25,6 +25,9 @@ const AnalyseAxe1: FunctionComponent = () => {
                 if(clickedImageName === "segment" || clickedImageName === "timeinzone") {
                     popupBg.classList.add("active");
                     popupImg.src = `https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getgraph?graph=${clickedImageName}`;
+                } else if (clickedImageName === "relation_cfv") {
+                    popupBg.classList.add("active");
+                    popupImg.src = `../images/${clickedImageName}.png`
                 } else {
                     setGraphName(clickedImageName);
                     setShowIframe(true);
@@ -67,6 +70,10 @@ const AnalyseAxe1: FunctionComponent = () => {
                         <div className="grid-item" id="timeinzone">
                             <img src="../images/timeInZoneIcon.png" alt="graph_time_in_zone" className="grid-img" />
                             <p>Sequence</p>
+                        </div>
+                        <div className="grid-item" id="relation_cfv">
+                            <img src="../images/relation_cfv.png" alt="relation_cfv" className="grid-img" />
+                            <p>Relationentre cadence, foule et vitesse</p>
                         </div>
                         <div className="grid-item" id="dist_per_session">
                             <img src="../images/dist_per_session.png" alt="dist_per_session" className="grid-img" />
