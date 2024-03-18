@@ -25,10 +25,10 @@ const AnalyseAxe1: FunctionComponent = () => {
                 if(clickedImageName === "segment" || clickedImageName === "timeinzone") {
                     popupBg.classList.add("active");
                     popupImg.src = `https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/getgraph?graph=${clickedImageName}`;
-                } else if (clickedImageName === "relation_cfv") {
+                } else if ( clickedImageName === "sessionDetailsHeartrate_2022_06_09" || clickedImageName === "sessionDetailsSpeed_2022_06_09") {
                     popupBg.classList.add("active");
                     popupImg.src = `../images/${clickedImageName}.png`
-                } else {
+                }else {
                     setGraphName(clickedImageName);
                     setShowIframe(true);
                     // window.open(`https://sport-predict-insightful-lizard-pk.cfapps.eu12.hana.ondemand.com/graph?name=${clickedImageName}`);
@@ -63,17 +63,37 @@ const AnalyseAxe1: FunctionComponent = () => {
                 </div>
                 <div className="smart-analysis">
                     <div className="grid">
-                        <div className="grid-item" id="segment">
+                        {/* <div className="grid-item" id="segment">
                             <img src="../images/segmentIcon.png" alt="graph_segment" className="grid-img" />
                             <p>Segment</p>
+                        </div> */}
+                        <div className="grid-item" id="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90">
+                            <img src="../images/timeinzone_aggregation.png" alt="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90" className="grid-img" />
+                            <p>Temps passé dans les zones</p>
+                        </div>
+                        <div className="grid-item" id="sessionDetailsSpeed_2022_06_09">
+                            <img src="../images/sessionDetailsSpeed_2022_06_09.png" alt="graph_segment" className="grid-img" />
+                            <p>Details de la vitesse</p>
+                        </div>
+                        <div className="grid-item" id="sessionDetailsHeartrate_2022_06_09">
+                            <img src="../images/sessionDetailsHeartrate_2022_06_09.png" alt="graph_segment" className="grid-img" />
+                            <p>Details du bpm</p>
                         </div>
                         <div className="grid-item" id="timeinzone">
                             <img src="../images/timeInZoneIcon.png" alt="graph_time_in_zone" className="grid-img" />
-                            <p>Sequence</p>
+                            <p>Analyse des vitesses / bpm par distance</p>
                         </div>
-                        <div className="grid-item" id="relation_cfv">
+                        <div className="grid-item" id="relationship_between_cadence_stride_speed&date_from=2020-01-01&date_to=2023-12-01">
                             <img src="../images/relation_cfv.png" alt="relation_cfv" className="grid-img" />
-                            <p>Relationentre cadence, foule et vitesse</p>
+                            <p>Relation entre cadence, foulée et vitesse</p>
+                        </div>
+                        <div className="grid-item" id="rest_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3">
+                            <img src="../images/influenceduring2session.png" alt="rest_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3" className="grid-img" />
+                            <p>Influence du repos entre 2 sessions</p>
+                        </div>
+                        <div className="grid-item" id="previous_number_of_session_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3">
+                            <img src="../images/influence3lastday.png" alt="previous_number_of_session_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3" className="grid-img" />
+                            <p>Influence nbr sessions des 3 derniers jours sur la vitesse (par catégorie de distance)</p>
                         </div>
                         <div className="grid-item" id="dist_per_session">
                             <img src="../images/dist_per_session.png" alt="dist_per_session" className="grid-img" />
@@ -82,18 +102,6 @@ const AnalyseAxe1: FunctionComponent = () => {
                         <div className="grid-item" id="chart_ratio_speed_heartrate_in_sequences">
                             <img src="../images/speed_vs_heartrate.png" alt="chart_ratio_speed_heartrate_in_sequences" className="grid-img" />
                             <p>Vitesse / bpm</p>
-                        </div>
-                        <div className="grid-item" id="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90">
-                            <img src="../images/timeinzone_aggregation.png" alt="timeinzone_aggregation&date_ref=2023-12-31&last_n_days=900&nb_days_aggregated=90" className="grid-img" />
-                            <p>Temps passé dans les zones</p>
-                        </div>
-                        <div className="grid-item" id="rest_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3">
-                            <img src="../images/influenceduring2session.png" alt="rest_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3" className="grid-img" />
-                            <p>Influence de la duration entre 2 sessions</p>
-                        </div>
-                        <div className="grid-item" id="previous_number_of_session_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3">
-                            <img src="../images/influence3lastday.png" alt="previous_number_of_session_influence&date_from=2020-01-01&date_to=2023-12-01&last_n_days=3" className="grid-img" />
-                            <p>Influence des sessions durant les 3 derniers jours</p>
                         </div>
                     </div>
                     <div className="ifram-graph">

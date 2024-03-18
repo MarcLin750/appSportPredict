@@ -15,6 +15,12 @@ const Entrainements: FunctionComponent = () => {
     const [dateFrom, setDateFrom] = useState('');
     const [dateTo, setDateTo] = useState('');
 
+    const [weight, setWeight] = useState('53.00');
+
+    const [lactates, setLactates] = useState(1.5);
+    const [sleepDuration, setSleepDuration] = useState("08:00");
+    const [nbrTour, setNbrTour] = useState(0);
+
     // Récupère les dates pour le filtre
     useEffect(() => {
         const formattedDate = getDate();
@@ -22,17 +28,15 @@ const Entrainements: FunctionComponent = () => {
         // console.log(formattedDate);
         setDateFrom(formattedDate);
         setDateTo(formattedDateNow);
+        
+        fetch(`${apiSportPredicLink}/lastsession`)
+         .then(res=> res.json())
+         .then(data => {goToSession(data)})
     }, []);
 
     useEffect(() =>  {
         getListOfSessions(dateFrom, dateTo);
     }, [dateFrom, dateTo]);
-
-    useEffect(() => {
-        fetch(`${apiSportPredicLink}/lastsession`)
-         .then(res=> res.json())
-         .then(data => {goToSession(data)})
-    }, []);
 
     useEffect(() => {
         setLlistOfSessionsFilterSport(listOfSessions);
@@ -84,15 +88,33 @@ const Entrainements: FunctionComponent = () => {
             setListOfSessions(formattedData);
             // console.log(listOfSessions);
           });
-    }
+    };
 
     const getDateFrom = (event: string) => {
         setDateFrom(event);
-    }
+    };
 
     const getDateTo = (event: string) => {
         setDateTo(event);
-    }
+    };
+
+    const handleChangeWeight = (event: string) => {
+        setWeight(event)
+    };
+
+    const handleChangeSleepDuration = (event: string) => {
+        setSleepDuration(event);
+    };
+
+    const handleChangeLacates = (event: any) => {
+        const newLactates: number = parseFloat(event.target.value);
+        setLactates(newLactates);
+    };
+
+    const handleChangeNbrTour = (event: any) => {
+        const newNbrTour: number = parseFloat(event.target.value);
+        setNbrTour(newNbrTour);
+    };
 
     const goToSession = (id: string) => {
         // console.log(id)
@@ -316,16 +338,13 @@ const Entrainements: FunctionComponent = () => {
                                 <small>Distance:</small><br/><strong>{formatMeters(session.DISTANCE)}</strong>
                             </div>
                             <div className="col-6">
+                                <small>Kilocalories:</small><br/><strong>{session.KILOCALORIES} kcal</strong>
+                            </div>
+                            <div className="col-6">
                                 <small>Fréquence cardiaque Max:</small><br/><strong>{formatBpm(session.MAXIMUMHEARTRATE)}</strong>
                             </div>
                             <div className="col-6">
                                 <small>Fréquence cardiaque Moyenne:</small><br/><strong>{formatBpm(session.AVERAGEHEARTRATE)}</strong>
-                            </div>
-                            <div className="col-6">
-                                <small>Fréquence cardiaque Moyenne:</small><br/><strong>{formatBpm(session.AVERAGEHEARTRATE)}</strong>
-                            </div>
-                            <div className="col-6">
-                                <small>Kilocalories:</small><br/><strong>{session.KILOCALORIES} kcal</strong>
                             </div>
                             <div className="col-6">
                                 <small>Vitesse Max:</small><br/><strong>{formatKmh(session.MAXSPEED)}</strong>
@@ -373,16 +392,13 @@ const Entrainements: FunctionComponent = () => {
                                 <small>Distance:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
                             <div className="col-6 placeholder-glow">
+                                <small>Kilocalories:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
+                            </div>
+                            <div className="col-6 placeholder-glow">
                                 <small>Fréquence cardiaque Max:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
                             <div className="col-6 placeholder-glow">
                                 <small>Fréquence cardiaque Moyenne:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
-                            </div>
-                            <div className="col-6 placeholder-glow">
-                                <small>Fréquence cardiaque Moyenne:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
-                            </div>
-                            <div className="col-6 placeholder-glow">
-                                <small>Kilocalories:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
                             </div>
                             <div className="col-6 placeholder-glow">
                                 <small>Vitesse Max:</small><br/><div className="placeholder placeholder-glow border rounded-2 p-2.4 col-2"></div>
@@ -419,7 +435,7 @@ const Entrainements: FunctionComponent = () => {
                         <div className="col-6">
                             <div className="input-group">
                                 <span className="input-group-text">Poids :</span>
-                                <input type="number" className="form-control" value="70.00" />
+                                <input type="number" className="form-control" value={weight} onChange={(event) => handleChangeWeight(event.target.value)} />
                                 <span className="input-group-text">kg</span>
                             </div>
                         </div>
@@ -452,11 +468,11 @@ const Entrainements: FunctionComponent = () => {
                         <span className="input-group-text">Matériel :</span>
                         <div className="input-group p-2">
                             <div className="input-group-text">
-                                <label>Type de chaussure :</label>
+                                <label>Type de chaussures :</label>
                             </div>
                             <select className="form-select form-select-sm">
-                                <option value="True">Chaussure course (semelle carbone)</option>
-                                <option value="False">Chaussure entrainement</option>
+                                <option value="True">Chaussures de course (semelle carbone)</option>
+                                <option value="False">Chaussures d'entrainement</option>
                             </select>
                         </div>
                         <div className="input-group p-2">
@@ -470,33 +486,12 @@ const Entrainements: FunctionComponent = () => {
                         </div>
                     </div>
                     <div className="card mb-3">
-                        <span className="input-group-text">Mesures physiques :</span>
-                        <div className="row">
-                            <div className="col-4">
-                                <div className="input-group p-2">
-                                    <label className="input-group-text">Tour n° :</label>
-                                    <input type="number" className="form-control" value="0"/>
-                                </div>
-                            </div>
-                            <div className="col-6">
-                                <div className="input-group p-2">
-                                    <label className="input-group-text">Taux mesuré :</label>
-                                    <input type="number" className="form-control" value="1.50"/>
-                                    <span className="input-group-text">mmol/L</span>
-                                </div>
-                            </div>
-                            <div className="col p-2">
-                                <button className="btn btn-primary">+</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card mb-3">
                         <span className="input-group-text">Etat physique/psychologique :</span>
                         <div className="row">
                             <div className="col-7">
                                 <div className="input-group p-2">
                                     <div className="input-group-text">
-                                        <label>Percéption de la séance (RPE) :</label>
+                                        <label>Perception de la séance (RPE) :</label>
                                     </div>
                                     <select className="form-select form-select-sm">
                                         <option value="">Echelle Borg</option>
@@ -531,7 +526,7 @@ const Entrainements: FunctionComponent = () => {
                                     <div className="input-group-text">
                                         <label>Durée sommeil :</label>
                                     </div>
-                                    <input type="time" className="input-group-text" value="08:00"/>
+                                    <input type="time" className="input-group-text" value={sleepDuration} onChange={(event) => {handleChangeSleepDuration(event.target.value)}}/>
                                 </div>
                             </div>
                             <div className="col">
@@ -544,6 +539,27 @@ const Entrainements: FunctionComponent = () => {
                                         <option value="0">Mauvais</option>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card mb-3">
+                        <span className="input-group-text">Mesures physiques :</span>
+                        <div className="row">
+                            <div className="col-4">
+                                <div className="input-group p-2">
+                                    <label className="input-group-text">Tour n° :</label>
+                                    <input type="number" className="form-control" value={nbrTour} onChange={(event) => {handleChangeNbrTour(event)}}/>
+                                </div>
+                            </div>
+                            <div className="col-6">
+                                <div className="input-group p-2">
+                                    <label className="input-group-text">Taux mesuré :</label>
+                                    <input type="number" className="form-control" value={lactates} onChange={(event) => {handleChangeLacates(event)}}/>
+                                    <span className="input-group-text">mmol/L</span>
+                                </div>
+                            </div>
+                            <div className="col p-2">
+                                <button className="btn btn-primary">+</button>
                             </div>
                         </div>
                     </div>

@@ -11,9 +11,9 @@ const TabHome: FunctionComponent = () => {
         <div className="page-tab">
             <div className="tab-bar">
                 <input type="radio" name="btn-tab" id="Entrainements" onClick={() => setActiveTab('Entrainements')}  checked={activeTab === 'Entrainements'} />
-                <label htmlFor="Entrainements">Entrainements</label>
+                <label htmlFor="Entrainements">Journal d'activités</label>
                 <input type="radio" name="btn-tab" id="AnalyseAxe1" onClick={() => setActiveTab('AnalyseAxe1')}/>
-                <label htmlFor="AnalyseAxe1">Smart analysis</label>
+                <label htmlFor="AnalyseAxe1">Analyses intelligentes</label>
                 {/* <input type="radio" name="btn-tab" id="AnalyseAxe2" onClick={() => setActiveTab('AnalyseAxe2')}/>
                 <label htmlFor="AnalyseAxe2">Session complète</label>
                 <input type="radio" name="btn-tab" id="AnalyseAxe3" onClick={() => setActiveTab('AnalyseAxe3')}/>
